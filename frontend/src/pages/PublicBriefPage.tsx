@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "@tanstack/react-router";
-import { CalendarDays, FileUp, Send } from "lucide-react";
+import { FileUp, Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -39,8 +39,8 @@ export function PublicBriefPage() {
 
   return (
     <ClientPortal>
-      <header className="border border-line bg-white p-6 shadow-sm sm:p-8"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-coral">Project brief</p><h1 className="mt-3 text-3xl font-extrabold tracking-[-0.04em] sm:text-4xl">{brief.data.project_name}</h1><p className="mt-3 text-sm leading-6 text-sage">Hi {brief.data.client_name}, {brief.data.brief_description}</p>{brief.data.target_delivery_date ? <p className="mt-5 flex items-center gap-2 text-xs font-bold text-sage"><CalendarDays size={15} /> Target delivery {shortDate(brief.data.target_delivery_date)}</p> : null}</header>
-      <Panel className="mt-5 p-5 sm:p-8"><div className="grid gap-7">{brief.data.questions.map((question, index) => <QuestionField key={question.id} token={token} question={question} index={index} value={answers[question.id]} onChange={(value) => update(question.id, value)} />)}</div><div className="mt-8 border-t border-line pt-6"><Button className="w-full sm:w-auto" onClick={send} disabled={submit.isPending}><Send size={16} /> {submit.isPending ? "Submitting" : "Submit brief"}</Button><p className="mt-3 text-xs leading-5 text-sage">You can review every answer before submitting. After submission, the secure link closes.</p></div></Panel>
+      <header className="border border-line bg-white px-6 py-8 sm:px-9"><p className="text-xs font-bold uppercase tracking-[0.12em] text-coral">Project brief · {brief.data.questions.length} questions</p><h1 className="mt-3 text-[30px] font-semibold tracking-[-0.02em]">{brief.data.project_name}</h1><p className="mt-2.5 text-[15px] leading-[1.65] text-[#52625d]">Hi {brief.data.client_name} — {brief.data.brief_description}{brief.data.target_delivery_date ? ` Target delivery ${shortDate(brief.data.target_delivery_date)}.` : ""}</p><div className="mt-[18px] flex gap-1.5">{brief.data.questions.map((question) => <span key={question.id} className={`h-[5px] flex-1 ${!isEmpty(answers[question.id]) ? "bg-forest" : "bg-line"}`} />)}</div><span className="mt-2 block text-[12.5px] text-sage">{brief.data.questions.filter((question) => !isEmpty(answers[question.id])).length} of {brief.data.questions.length} answered</span></header>
+      <Panel className="mt-4 px-6 py-8 sm:px-9"><div className="grid gap-[26px]">{brief.data.questions.map((question, index) => <QuestionField key={question.id} token={token} question={question} index={index} value={answers[question.id]} onChange={(value) => update(question.id, value)} />)}</div><div className="mt-8 border-t border-[#eceee9] pt-6"><Button variant="accent" className="min-h-[50px] w-full text-[15px]" onClick={send} disabled={submit.isPending}><Send size={16} /> {submit.isPending ? "Submitting" : "Submit brief"}</Button><p className="mt-3 text-center text-[13px] leading-[1.6] text-sage">You can review every answer before submitting. After submission, the secure link closes.</p></div></Panel>
     </ClientPortal>
   );
 }
@@ -66,7 +66,7 @@ function QuestionField({ token, question, index, value, onChange }: { token: str
 
 function ChoiceField({ label, description, options, multiple, value, onChange }: { label: string; description: string; options: string[]; multiple: boolean; value: unknown; onChange: (value: unknown) => void }) {
   const selected = Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
-  return <fieldset><legend className="text-sm font-semibold">{label}</legend>{description ? <p className="mt-1 text-xs text-sage">{description}</p> : null}<div className="mt-3 grid gap-2">{options.map((option) => <label key={option} className="flex min-h-11 cursor-pointer items-center gap-3 border border-line bg-paper px-3 text-sm font-semibold"><input className="size-4 accent-forest" type={multiple ? "checkbox" : "radio"} name={label} checked={multiple ? selected.includes(option) : value === option} onChange={(event) => onChange(multiple ? event.target.checked ? [...selected, option] : selected.filter((item) => item !== option) : option)} />{option}</label>)}</div></fieldset>;
+  return <fieldset><legend className="text-[14.5px] font-bold">{label}</legend>{description ? <p className="mt-1 text-[13px] text-sage">{description}</p> : null}<div className="mt-3 grid gap-2">{options.map((option) => { const checked = multiple ? selected.includes(option) : value === option; return <label key={option} className={`flex min-h-[46px] cursor-pointer items-center gap-3 border px-3.5 text-sm font-semibold ${checked ? "border-forest bg-mint" : "border-line bg-paper"}`}><input className="size-4 accent-forest" type={multiple ? "checkbox" : "radio"} name={label} checked={checked} onChange={(event) => onChange(multiple ? event.target.checked ? [...selected, option] : selected.filter((item) => item !== option) : option)} />{option}</label>; })}</div></fieldset>;
 }
 
 function isEmpty(value: unknown) {
