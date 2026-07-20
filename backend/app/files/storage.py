@@ -28,7 +28,12 @@ class ObjectStorage:
         async with self.client() as client:
             try:
                 await client.head_bucket(Bucket=settings.s3_bucket)
-            except ClientError:
+            except ClientError as error:
+                if not settings.s3_auto_create_bucket:
+                    raise
+                code = str(error.response.get("Error", {}).get("Code", ""))
+                if code not in {"404", "NoSuchBucket", "NotFound"}:
+                    raise
                 await client.create_bucket(Bucket=settings.s3_bucket)
 
     async def is_ready(self) -> bool:
