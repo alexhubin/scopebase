@@ -33,6 +33,11 @@ services:
       retries: 10
     volumes:
       - minio_data:/data
+    networks:
+      default:
+      caddy:
+        aliases:
+          - scopebase-storage
 
   backend:
     build:
@@ -73,7 +78,17 @@ services:
     depends_on:
       - frontend
       - backend
+    networks:
+      default:
+      caddy:
+        aliases:
+          - scopebase-gateway
 
 volumes:
   postgres_data:
   minio_data:
+
+networks:
+  caddy:
+    external: true
+    name: ${CADDY_NETWORK:-caddy-proxy}

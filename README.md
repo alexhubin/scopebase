@@ -204,7 +204,7 @@ The integration suite covers authentication, authorization, public-link isolatio
 
 ## Deployment
 
-ScopeBase is prepared for a single VPS without taking ownership of the host's existing ports `80` and `443`. The production stack binds its internal gateway to `127.0.0.1:3080` and MinIO to `127.0.0.1:3090`; the host Caddy instance remains responsible for public HTTPS.
+ScopeBase is prepared for a single VPS without taking ownership of the host's existing ports `80` and `443`. The production stack binds its internal gateway to `127.0.0.1:3080` and MinIO to `127.0.0.1:3090`; the existing Caddy instance remains responsible for public HTTPS. A containerized Caddy can instead reach stable service aliases over the configured external Docker network.
 
 ```bash
 cp .env.production.example .env.production

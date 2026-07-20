@@ -1,6 +1,6 @@
 # VPS deployment
 
-This guide assumes Docker Compose v2 and an existing host-level Caddy installation. ScopeBase deliberately does not replace the host Caddy configuration or bind public ports.
+This guide assumes Docker Compose v2 and an existing Caddy installation. ScopeBase deliberately does not replace the existing Caddy configuration or bind public ports.
 
 ## DNS
 
@@ -9,7 +9,7 @@ Create two DNS records pointing to the VPS:
 - the application hostname, such as `scopebase.example.com`;
 - the object-storage hostname, such as `scopebase-storage.example.com`.
 
-Both hostnames must resolve before Caddy requests certificates.
+Both hostnames must resolve before Caddy requests certificates. An `sslip.io` hostname may be used for a demonstration deployment without managing DNS.
 
 ## Prepare the project
 
@@ -36,6 +36,8 @@ Required production choices:
 - real SMTP settings;
 - either the isolated local billing adapter or complete Stripe credentials.
 
+Set `CADDY_NETWORK` to an external Docker network shared with a containerized Caddy instance. If Caddy runs directly on the host, create a dedicated unused external network for Compose and use the loopback ports for proxying.
+
 ## Start without touching public ports
 
 Validate the rendered configuration and inspect port ownership before starting:
@@ -56,7 +58,7 @@ The backend applies Alembic migrations before starting workers. Demo data is not
 
 ## Connect the existing Caddy instance
 
-Add only the required sites to the existing Caddy configuration. Preserve all unrelated imports, global options, and Northstar configuration.
+For a host-level Caddy installation, proxy to the loopback ports:
 
 ```caddyfile
 scopebase.example.com {
@@ -77,6 +79,20 @@ systemctl reload caddy
 ```
 
 Use the host's actual Caddy service or container workflow if it differs. Never replace the complete configuration with the example above.
+
+For a containerized Caddy installation, attach only the ScopeBase gateway and storage services to Caddy's existing external network. Set `CADDY_NETWORK` to its exact name and route to the stable aliases:
+
+```caddyfile
+scopebase.example.com {
+  reverse_proxy scopebase-gateway:80
+}
+
+scopebase-storage.example.com {
+  reverse_proxy scopebase-storage:9000
+}
+```
+
+The checked-in `infrastructure/caddy/Caddyfile.scopebase` contains an immediately usable `sslip.io` variant. Merge that snippet into the existing configuration; do not replace unrelated sites.
 
 ## Verification
 

@@ -65,4 +65,4 @@ The production Compose project exposes only two loopback ports:
 - `127.0.0.1:3080` for the internal ScopeBase gateway;
 - `127.0.0.1:3090` for the S3-compatible endpoint.
 
-The VPS's existing Caddy instance terminates TLS and proxies the application and storage hostnames to these ports. ScopeBase does not bind the host's public HTTP or HTTPS ports.
+The VPS's existing Caddy instance terminates TLS and proxies the application and storage hostnames. A host-level Caddy can use the loopback ports. A containerized Caddy shares one external Docker network with only the ScopeBase gateway and storage services and uses their stable aliases. ScopeBase does not bind the host's public HTTP or HTTPS ports.
