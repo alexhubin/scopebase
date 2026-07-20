@@ -79,7 +79,7 @@ See [Architecture](docs/ARCHITECTURE.md) for boundaries, data flow, and importan
 | Data and forms | TanStack Query, React Hook Form, Zod |
 | UI | Tailwind CSS 4, Base UI, Lucide icons |
 | API | Python 3.12, FastAPI, Pydantic v2, SQLAlchemy 2 |
-| Data | PostgreSQL 16, Alembic, S3-compatible object storage |
+| Data | PostgreSQL 18, Alembic, S3-compatible object storage |
 | Auth | JWT access tokens, rotating refresh tokens, Argon2 |
 | Billing | Stripe or local development adapter |
 | Quality | pytest, Ruff, mypy, Vitest, React Testing Library, ESLint |
