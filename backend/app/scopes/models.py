@@ -58,4 +58,3 @@ class ScopeDocument(UUIDPrimaryKeyMixin, Base):
     approval: Mapped[Approval | None] = relationship(
         back_populates="scope_document", cascade="all, delete-orphan", uselist=False
     )
-

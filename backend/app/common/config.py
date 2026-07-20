@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -40,6 +40,13 @@ class Settings(BaseSettings):
             return [item.strip() for item in value.split(",") if item.strip()]
         return value
 
+    @model_validator(mode="after")
+    def validate_production_secret(self) -> "Settings":
+        invalid_secret = len(self.secret_key) < 32 or "development" in self.secret_key.lower()
+        if self.app_env == "production" and invalid_secret:
+            raise ValueError("Production requires a strong SECRET_KEY")
+        return self
+
 
 @lru_cache
 def get_settings() -> Settings:
@@ -47,4 +54,3 @@ def get_settings() -> Settings:
 
 
 settings = get_settings()
-

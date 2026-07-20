@@ -56,4 +56,3 @@ class Project(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     activity_events: Mapped[list[ActivityEvent]] = relationship(
         back_populates="project", cascade="all, delete-orphan"
     )
-

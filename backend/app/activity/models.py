@@ -32,4 +32,3 @@ class ActivityEvent(UUIDPrimaryKeyMixin, Base):
     )
 
     project: Mapped[Project | None] = relationship(back_populates="activity_events")
-

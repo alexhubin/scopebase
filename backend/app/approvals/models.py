@@ -32,4 +32,3 @@ class Approval(UUIDPrimaryKeyMixin, Base):
     user_agent: Mapped[str | None] = mapped_column(String(512))
 
     scope_document: Mapped[ScopeDocument] = relationship(back_populates="approval")
-

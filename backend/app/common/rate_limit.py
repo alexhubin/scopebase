@@ -23,6 +23,9 @@ class InMemoryRateLimiter:
                 )
             records.append(datetime.now(UTC))
 
+    def reset(self) -> None:
+        self._requests.clear()
+
 
 limiter = InMemoryRateLimiter()
 
@@ -35,4 +38,3 @@ async def auth_rate_limit(request: Request) -> None:
 async def public_rate_limit(request: Request) -> None:
     host = request.client.host if request.client else "unknown"
     await limiter.check(f"public:{host}", 60, 60)
-

@@ -30,4 +30,3 @@ class User(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     @property
     def user_id(self) -> uuid.UUID:
         return self.id
-

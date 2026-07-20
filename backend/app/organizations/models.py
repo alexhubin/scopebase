@@ -59,4 +59,3 @@ class OrganizationMember(TimestampMixin, Base):
 
     organization: Mapped[Organization] = relationship(back_populates="members")
     user: Mapped[User] = relationship(back_populates="memberships")
-

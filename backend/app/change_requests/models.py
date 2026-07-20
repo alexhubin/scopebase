@@ -38,4 +38,3 @@ class ChangeRequest(UUIDPrimaryKeyMixin, Base):
     )
 
     project: Mapped[Project] = relationship(back_populates="change_requests")
-

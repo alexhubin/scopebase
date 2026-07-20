@@ -53,4 +53,3 @@ class PublicLinkKind(StrEnum):
 class SubscriptionPlan(StrEnum):
     free = "free"
     pro = "pro"
-

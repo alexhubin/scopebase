@@ -30,4 +30,3 @@ class FileAttachment(UUIDPrimaryKeyMixin, Base):
     )
 
     project: Mapped[Project] = relationship(back_populates="attachments")
-

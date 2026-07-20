@@ -41,4 +41,3 @@ class ProjectBrief(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     submitted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     project: Mapped[Project] = relationship(back_populates="brief")
-
