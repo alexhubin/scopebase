@@ -22,3 +22,7 @@ export function ClientConfirmation({ title, description }: { title: string; desc
     </ClientPortal>
   );
 }
+
+export function ClientPortalError({ message }: { message: string }) {
+  return <div className="grid min-h-80 place-items-center border border-line bg-white p-8 text-center"><div><h1 className="text-2xl font-extrabold">Link unavailable</h1><p className="mt-3 text-sm leading-6 text-sage">{message}</p><p className="mt-2 text-sm text-sage">Ask the project team for a new secure link.</p></div></div>;
+}

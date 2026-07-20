@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { get, post } from "../api/client";
 import type { BriefQuestion, PublicBrief } from "../api/types";
 import { uploadBriefFile } from "../api/uploads";
-import { ClientConfirmation, ClientPortal } from "../components/ClientPortal";
+import { ClientConfirmation, ClientPortal, ClientPortalError } from "../components/ClientPortal";
 import { Button, Field, Input, Panel, Spinner, Textarea } from "../components/ui";
 import { shortDate } from "../lib/format";
 
@@ -24,7 +24,7 @@ export function PublicBriefPage() {
 
   if (completed) return <ClientConfirmation title="Brief submitted" description="Thank you. Your answers and files have been sent to the project team. They can now prepare a precise scope for your review." />;
   if (brief.isLoading) return <ClientPortal><Spinner label="Opening your brief" /></ClientPortal>;
-  if (brief.error || !brief.data) return <ClientPortal><PortalError message={brief.error?.message ?? "This link is no longer available."} /></ClientPortal>;
+  if (brief.error || !brief.data) return <ClientPortal><ClientPortalError message={brief.error?.message ?? "This link is no longer available."} /></ClientPortal>;
   if (brief.data.submitted) return <ClientConfirmation title="Brief already submitted" description="Your project team has received the answers. You can close this page." />;
 
   const update = (id: string, value: unknown) => setAnswers((current) => ({ ...current, [id]: value }));
@@ -67,10 +67,6 @@ function QuestionField({ token, question, index, value, onChange }: { token: str
 function ChoiceField({ label, description, options, multiple, value, onChange }: { label: string; description: string; options: string[]; multiple: boolean; value: unknown; onChange: (value: unknown) => void }) {
   const selected = Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
   return <fieldset><legend className="text-sm font-semibold">{label}</legend>{description ? <p className="mt-1 text-xs text-sage">{description}</p> : null}<div className="mt-3 grid gap-2">{options.map((option) => <label key={option} className="flex min-h-11 cursor-pointer items-center gap-3 border border-line bg-paper px-3 text-sm font-semibold"><input className="size-4 accent-forest" type={multiple ? "checkbox" : "radio"} name={label} checked={multiple ? selected.includes(option) : value === option} onChange={(event) => onChange(multiple ? event.target.checked ? [...selected, option] : selected.filter((item) => item !== option) : option)} />{option}</label>)}</div></fieldset>;
-}
-
-function PortalError({ message }: { message: string }) {
-  return <div className="grid min-h-80 place-items-center border border-line bg-white p-8 text-center"><div><h1 className="text-2xl font-extrabold">Link unavailable</h1><p className="mt-3 text-sm leading-6 text-sage">{message}</p><p className="mt-2 text-sm text-sage">Ask the project team for a new secure link.</p></div></div>;
 }
 
 function isEmpty(value: unknown) {

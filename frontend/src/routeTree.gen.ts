@@ -14,6 +14,8 @@ import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppProjectsIndexRouteImport } from './routes/_app/projects/index'
 import { Route as AppProjectsProjectIdRouteRouteImport } from './routes/_app/projects/$projectId/route'
 import { Route as ClientBriefTokenRouteImport } from './routes/client/brief/$token'
+import { Route as ClientChangeRequestTokenRouteImport } from './routes/client/change-request/$token'
+import { Route as ClientScopeTokenRouteImport } from './routes/client/scope/$token'
 import { Route as AppProjectsProjectIdIndexRouteImport } from './routes/_app/projects/$projectId/index'
 import { Route as AppProjectsProjectIdActivityRouteImport } from './routes/_app/projects/$projectId/activity'
 import { Route as AppProjectsProjectIdBriefRouteImport } from './routes/_app/projects/$projectId/brief'
@@ -76,6 +78,17 @@ const ClientBriefTokenRoute = ClientBriefTokenRouteImport.update({
   path: '/client/brief/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClientChangeRequestTokenRoute =
+  ClientChangeRequestTokenRouteImport.update({
+    id: '/client/change-request/$token',
+    path: '/client/change-request/$token',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ClientScopeTokenRoute = ClientScopeTokenRouteImport.update({
+  id: '/client/scope/$token',
+  path: '/client/scope/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppProjectsProjectIdIndexRoute =
   AppProjectsProjectIdIndexRouteImport.update({
     id: '/',
@@ -123,6 +136,8 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AppSettingsRoute
   '/projects/$projectId': typeof AppProjectsProjectIdRouteRouteWithChildren
   '/client/brief/$token': typeof ClientBriefTokenRoute
+  '/client/change-request/$token': typeof ClientChangeRequestTokenRoute
+  '/client/scope/$token': typeof ClientScopeTokenRoute
   '/projects/': typeof AppProjectsIndexRoute
   '/projects/$projectId/activity': typeof AppProjectsProjectIdActivityRoute
   '/projects/$projectId/brief': typeof AppProjectsProjectIdBriefRoute
@@ -140,6 +155,8 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
   '/client/brief/$token': typeof ClientBriefTokenRoute
+  '/client/change-request/$token': typeof ClientChangeRequestTokenRoute
+  '/client/scope/$token': typeof ClientScopeTokenRoute
   '/projects': typeof AppProjectsIndexRoute
   '/projects/$projectId/activity': typeof AppProjectsProjectIdActivityRoute
   '/projects/$projectId/brief': typeof AppProjectsProjectIdBriefRoute
@@ -160,6 +177,8 @@ export interface FileRoutesById {
   '/_app/settings': typeof AppSettingsRoute
   '/_app/projects/$projectId': typeof AppProjectsProjectIdRouteRouteWithChildren
   '/client/brief/$token': typeof ClientBriefTokenRoute
+  '/client/change-request/$token': typeof ClientChangeRequestTokenRoute
+  '/client/scope/$token': typeof ClientScopeTokenRoute
   '/_app/projects/': typeof AppProjectsIndexRoute
   '/_app/projects/$projectId/activity': typeof AppProjectsProjectIdActivityRoute
   '/_app/projects/$projectId/brief': typeof AppProjectsProjectIdBriefRoute
@@ -180,6 +199,8 @@ export interface FileRouteTypes {
     | '/settings'
     | '/projects/$projectId'
     | '/client/brief/$token'
+    | '/client/change-request/$token'
+    | '/client/scope/$token'
     | '/projects/'
     | '/projects/$projectId/activity'
     | '/projects/$projectId/brief'
@@ -197,6 +218,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/settings'
     | '/client/brief/$token'
+    | '/client/change-request/$token'
+    | '/client/scope/$token'
     | '/projects'
     | '/projects/$projectId/activity'
     | '/projects/$projectId/brief'
@@ -216,6 +239,8 @@ export interface FileRouteTypes {
     | '/_app/settings'
     | '/_app/projects/$projectId'
     | '/client/brief/$token'
+    | '/client/change-request/$token'
+    | '/client/scope/$token'
     | '/_app/projects/'
     | '/_app/projects/$projectId/activity'
     | '/_app/projects/$projectId/brief'
@@ -233,6 +258,8 @@ export interface RootRouteChildren {
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
   ClientBriefTokenRoute: typeof ClientBriefTokenRoute
+  ClientChangeRequestTokenRoute: typeof ClientChangeRequestTokenRoute
+  ClientScopeTokenRoute: typeof ClientScopeTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -312,6 +339,20 @@ declare module '@tanstack/react-router' {
       path: '/client/brief/$token'
       fullPath: '/client/brief/$token'
       preLoaderRoute: typeof ClientBriefTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/client/change-request/$token': {
+      id: '/client/change-request/$token'
+      path: '/client/change-request/$token'
+      fullPath: '/client/change-request/$token'
+      preLoaderRoute: typeof ClientChangeRequestTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/client/scope/$token': {
+      id: '/client/scope/$token'
+      path: '/client/scope/$token'
+      fullPath: '/client/scope/$token'
+      preLoaderRoute: typeof ClientScopeTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/projects/$projectId/': {
@@ -407,6 +448,8 @@ const rootRouteChildren: RootRouteChildren = {
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
   ClientBriefTokenRoute: ClientBriefTokenRoute,
+  ClientChangeRequestTokenRoute: ClientChangeRequestTokenRoute,
+  ClientScopeTokenRoute: ClientScopeTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
