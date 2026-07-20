@@ -2,53 +2,40 @@
 
 ## Evidence
 
-- Source visual truth: `/Users/aleksandrhubin/Downloads/Редизайн системы с улучшением типографики/ScopeBase Redesign.dc.html`
-- Implementation screenshot: in-app Browser capture of `http://127.0.0.1:4173/`
-- Desktop viewport: 1440 × 1024
+- Source visual truth: `/Users/aleksandrhubin/Downloads/Редизайн системы с улучшением типографики-3/ScopeBase Landing.dc.html`
+- Implementation: `http://127.0.0.1:4173/`
+- Desktop comparison: source and implementation captured together in the in-app Browser
+- Desktop viewport target: 1440 × 1024
 - Mobile viewport: 390 × 844
-- State: landing page, initial viewport
+- States reviewed: hero, problem section, workflow introduction, interactive brief card, mobile layout
 
-## Full-view comparison
+## Fidelity review
 
-The source and implementation were captured together at 1440 × 1024. The revised page now uses an inset presentation frame with a muted outer canvas, matching the source composition instead of extending the product surface edge to edge.
+- Typography: Public Sans and Space Grotesk match the source hierarchy, weights, and compact headline rhythm.
+- Layout: the four-column editorial grid, two-column hero, problem rail, paired workflow rows, audience cards, pricing, FAQ, CTA, and footer have been rebuilt from the supplied landing design.
+- Spacing: the source's larger vertical rhythm is preserved while retaining the previously requested inset desktop frame and reduced top inset.
+- Colors and borders: forest, coral, mint, paper, sand, and line treatments match the supplied palette.
+- Content: all six FAQ entries, full plan features, audience benefits, problem examples, workflow explanations, and client-facing screens are present.
+- Assets: the design contains no raster imagery. The cursor decoration uses the project's existing Lucide icon library.
 
-## Focused-region comparison
+## Responsive review
 
-A separate crop was not needed because the affected outer frame, header, hero, first statistics row, typography, and borders were readable in the full-view comparison. Mobile was captured separately to confirm that the desktop frame does not narrow the 390 px layout.
+- The supplied source overflows to 853 px at a 390 px viewport.
+- The implementation reports `clientWidth: 390` and `scrollWidth: 390`.
+- Header navigation is reduced to authentication actions, hero actions stack, four-column sections collapse, workflow pairs become vertical, and dense client cards reflow without clipped controls.
 
-## Required fidelity surfaces
+## Functional review
 
-- Fonts and typography: Public Sans and Space Grotesk remain aligned with the source, with unchanged hierarchy and wrapping.
-- Spacing and layout rhythm: desktop uses 24 px top padding, 48 px side and bottom padding, and a centered 1440 px maximum-width frame. Major content blocks now use 48 px desktop vertical padding and 36–40 px on smaller screens; mobile remains full width.
-- Colors and visual tokens: the outer canvas uses the source's muted gray-green treatment; product colors are unchanged.
-- Image quality and asset fidelity: the design contains no raster imagery requiring replacement.
-- Copy and content: unchanged from the approved redesign.
+- The brief answer chip changes selection state and answer count.
+- Brief submission, scope approval, and change acceptance provide persistent visible confirmation states.
+- Authentication and signup links retain the existing TanStack Router destinations.
+- Primary hero CTA navigation to `/sign-up`: passed.
+- Production build: passed.
+- ESLint: passed.
+- Core client journey tests: 3 passed.
 
 ## Findings
 
 - No actionable P0, P1, or P2 findings remain.
-
-## Comparison history
-
-- Earlier P2: the landing surface extended to the browser edges, while the source used a clearly visible outer canvas.
-- Fix: added responsive outer padding, a centered maximum-width frame, a subtle border, and restrained elevation.
-- Post-fix evidence: the 1440 × 1024 capture shows the inset frame; the 390 × 844 capture reports `scrollWidth: 390` and preserves the mobile layout without horizontal overflow.
-- User-directed polish: the 48 px desktop top inset felt too large.
-- Fix: reduced only the desktop top inset to 24 px while preserving the 48 px side and bottom spacing.
-- Post-fix evidence: the desktop browser measurement reports a 24 px frame offset; mobile remains at a 0 px offset with `scrollWidth: 390`.
-- User-directed polish: content blocks needed more breathing room above and below their contents.
-- Fix: increased vertical padding across the hero, statistics, problem rows, workflow, audience, pricing, FAQ, and final CTA while retaining existing horizontal alignment.
-- Post-fix evidence: desktop before-and-after captures show the expanded vertical rhythm across both the first viewport and workflow section; the mobile capture reports `scrollWidth: 390`.
-
-## Functional validation
-
-- Production build: passed
-- ESLint: passed
-- Core client journey tests: 3 passed
-- Primary landing CTA route: passed in the previous full redesign QA
-
-## Follow-up polish
-
-- None required for this change.
 
 final result: passed
