@@ -157,6 +157,11 @@ export interface FileAttachment {
   created_at: string;
 }
 
+export interface PublicLink {
+  url: string;
+  expires_at: string | null;
+}
+
 export interface PublicBrief {
   project_name: string;
   client_name: string;
@@ -187,4 +192,3 @@ export interface PublicChangeRequest {
   currency: string;
   change_request: ChangeRequest;
 }
-
