@@ -11,6 +11,7 @@ import { money, statusLabels } from "../lib/format";
 const sections = [
   { label: "Overview", path: "/projects/$projectId" },
   { label: "Brief", path: "/projects/$projectId/brief" },
+  { label: "Scope", path: "/projects/$projectId/scope" },
 ] as const;
 
 export function ProjectWorkspace() {
