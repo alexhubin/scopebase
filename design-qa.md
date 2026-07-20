@@ -19,7 +19,7 @@ A separate crop was not needed because the affected outer frame, header, hero, f
 ## Required fidelity surfaces
 
 - Fonts and typography: Public Sans and Space Grotesk remain aligned with the source, with unchanged hierarchy and wrapping.
-- Spacing and layout rhythm: desktop uses responsive outer padding and a centered 1440 px maximum-width frame; mobile remains full width.
+- Spacing and layout rhythm: desktop uses 24 px top padding, 48 px side and bottom padding, and a centered 1440 px maximum-width frame; mobile remains full width.
 - Colors and visual tokens: the outer canvas uses the source's muted gray-green treatment; product colors are unchanged.
 - Image quality and asset fidelity: the design contains no raster imagery requiring replacement.
 - Copy and content: unchanged from the approved redesign.
@@ -33,6 +33,9 @@ A separate crop was not needed because the affected outer frame, header, hero, f
 - Earlier P2: the landing surface extended to the browser edges, while the source used a clearly visible outer canvas.
 - Fix: added responsive outer padding, a centered maximum-width frame, a subtle border, and restrained elevation.
 - Post-fix evidence: the 1440 × 1024 capture shows the inset frame; the 390 × 844 capture reports `scrollWidth: 390` and preserves the mobile layout without horizontal overflow.
+- User-directed polish: the 48 px desktop top inset felt too large.
+- Fix: reduced only the desktop top inset to 24 px while preserving the 48 px side and bottom spacing.
+- Post-fix evidence: the desktop browser measurement reports a 24 px frame offset; mobile remains at a 0 px offset with `scrollWidth: 390`.
 
 ## Functional validation
 
