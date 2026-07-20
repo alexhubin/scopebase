@@ -40,7 +40,7 @@ export function ProjectWorkspace() {
     <div className="animate-rise">
       <Link
         to="/projects"
-        className="focus-ring mb-5 inline-flex items-center gap-2 rounded text-sm font-bold text-sage hover:text-forest"
+        className="focus-ring mb-[18px] inline-flex items-center gap-2 text-[13px] font-semibold text-[#52625d] hover:text-forest"
       >
         <ArrowLeft size={16} /> Projects
       </Link>
@@ -57,18 +57,16 @@ export function ProjectWorkspace() {
           >
             {statusLabels[project.status]}
           </Badge>
-          <h1 className="mt-3 text-3xl font-extrabold tracking-[-0.04em] text-ink sm:text-4xl">
+          <h1 className="mt-3 font-display text-[30px] font-semibold leading-tight tracking-[-0.02em] text-ink sm:text-[32px]">
             {project.name}
           </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-sage">
+          <p className="mt-2 max-w-2xl text-[15px] leading-6 text-[#52625d]">
             {project.description || "No project description yet."}
           </p>
         </div>
-        <p className="text-2xl font-extrabold text-ink">
-          {money(project.base_price, project.currency)}
-        </p>
+        <div className="text-left sm:text-right"><span className="text-[12.5px] text-sage">Scope value</span><p className="mt-0.5 font-display text-[28px] font-semibold leading-none text-ink">{money(project.base_price, project.currency)}</p></div>
       </header>
-      <nav className="mt-7 flex gap-1 overflow-x-auto border-b border-line" aria-label="Project sections">
+      <nav className="mt-[26px] flex gap-0.5 overflow-x-auto border-b border-line" aria-label="Project sections">
         {sections.map((section) => (
           <Link
             key={section.label}
@@ -81,7 +79,7 @@ export function ProjectWorkspace() {
           </Link>
         ))}
       </nav>
-      <div className="pt-7">
+      <div className="pt-[26px]">
         <Outlet />
       </div>
     </div>

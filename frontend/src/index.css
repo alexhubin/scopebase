@@ -1,3 +1,11 @@
+@import "@fontsource/public-sans/400.css";
+@import "@fontsource/public-sans/500.css";
+@import "@fontsource/public-sans/600.css";
+@import "@fontsource/public-sans/700.css";
+@import "@fontsource/space-grotesk/400.css";
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/600.css";
+@import "@fontsource/space-grotesk/700.css";
 @import "tailwindcss";
 
 @theme {
@@ -10,8 +18,8 @@
   --color-sand: #eee9dd;
   --color-line: #d8ded9;
   --color-coral: #e56f51;
-  --font-sans: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
-  --font-display: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+  --font-sans: "Public Sans", "Segoe UI", sans-serif;
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
 }
 
 :root {
@@ -30,9 +38,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 80% -10%, rgba(219, 233, 228, 0.8), transparent 34rem),
-    #f8f7f2;
+  background: #f8f7f2;
 }
 
 button,
@@ -67,8 +73,16 @@ a {
   animation: rise 420ms ease-out both;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+}
+
 .focus-ring:focus-visible {
   outline: 3px solid rgba(229, 111, 81, 0.35);
   outline-offset: 2px;
 }
-

@@ -1,5 +1,5 @@
 import { Link, Navigate, Outlet, useRouterState } from "@tanstack/react-router";
-import { FolderKanban, Gauge, LogOut, Settings } from "lucide-react";
+import { FolderKanban, Gauge, Settings } from "lucide-react";
 
 import { useAuth } from "../features/auth/auth-context";
 import { Logo } from "./Logo";
@@ -24,20 +24,18 @@ export function AppShell() {
   if (!session) return null;
 
   return (
-    <div className="min-h-screen bg-paper lg:grid lg:grid-cols-[248px_1fr]">
+    <div className="min-h-screen bg-paper lg:grid lg:grid-cols-[264px_1fr]">
       <aside className="hidden min-h-screen border-r border-white/10 bg-forest px-5 py-6 text-white lg:flex lg:flex-col">
         <Logo light />
-        <nav className="mt-12 grid gap-1">
+        <nav className="mt-10 grid gap-1 text-sm font-semibold">
           {navItems.map((item) => {
             const active = pathname.startsWith(item.to);
-            const Icon = item.icon;
             return (
               <Link
                 key={item.to}
                 to={item.to}
-                className={`focus-ring flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition ${active ? "bg-white text-forest" : "text-white/70 hover:bg-white/10 hover:text-white"}`}
+                className={`focus-ring px-3 py-[11px] transition ${active ? "bg-white text-forest" : "text-white/70 hover:bg-white/10 hover:text-white"}`}
               >
-                <Icon size={18} />
                 {item.label}
               </Link>
             );
@@ -45,13 +43,12 @@ export function AppShell() {
         </nav>
         <div className="mt-auto border-t border-white/10 pt-5">
           <p className="truncate text-sm font-bold">{session.user.full_name}</p>
-          <p className="mt-1 truncate text-xs text-white/55">{session.organization.name}</p>
+          <p className="mt-1 truncate text-xs text-white/55">{session.organization.name} · Free plan</p>
           <button
             type="button"
             onClick={() => void signOut()}
-            className="focus-ring mt-4 flex w-full items-center gap-2 rounded-lg py-2 text-sm font-semibold text-white/65 transition hover:text-white"
+            className="focus-ring mt-4 flex w-full items-center py-1 text-[13px] font-semibold text-white/65 transition hover:text-white"
           >
-            <LogOut size={16} />
             Sign out
           </button>
         </div>
@@ -67,7 +64,7 @@ export function AppShell() {
                   key={item.to}
                   to={item.to}
                   aria-label={item.label}
-                  className="focus-ring rounded-lg p-2 text-sage hover:bg-mint hover:text-forest"
+                  className="focus-ring p-2 text-sage hover:bg-mint hover:text-forest"
                 >
                   <Icon size={20} />
                 </Link>
@@ -97,9 +94,9 @@ export function PageHeader({
   return (
     <div className="mb-7 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
       <div>
-        {eyebrow ? <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.16em] text-coral">{eyebrow}</p> : null}
-        <h1 className="text-3xl font-extrabold tracking-[-0.035em] text-ink sm:text-4xl">{title}</h1>
-        {description ? <p className="mt-2 max-w-2xl text-sm leading-6 text-sage sm:text-base">{description}</p> : null}
+        {eyebrow ? <p className="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-coral">{eyebrow}</p> : null}
+        <h1 className="font-display text-[32px] font-semibold leading-tight tracking-[-0.02em] text-ink sm:text-[34px]">{title}</h1>
+        {description ? <p className="mt-2 max-w-2xl text-sm leading-6 text-[#52625d] sm:text-[15px]">{description}</p> : null}
       </div>
       {action ? <div className="shrink-0">{action}</div> : null}
     </div>

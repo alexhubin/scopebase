@@ -6,17 +6,18 @@ export function Button({
   variant = "primary",
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "ghost" | "danger";
+  variant?: "primary" | "accent" | "secondary" | "ghost" | "danger";
 }) {
   const variants = {
-    primary: "bg-forest text-white hover:bg-forest-strong shadow-sm",
+    primary: "bg-forest text-white hover:bg-forest-strong",
+    accent: "bg-coral text-white hover:bg-[#d86043]",
     secondary: "border border-line bg-white text-ink hover:border-sage hover:bg-paper",
     ghost: "text-ink hover:bg-mint",
     danger: "bg-red-700 text-white hover:bg-red-800",
   };
   return (
     <BaseButton
-      className={`focus-ring inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}
+      className={`focus-ring inline-flex min-h-10 items-center justify-center gap-2 px-4 py-2 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}
       {...props}
     />
   );
@@ -25,7 +26,7 @@ export function Button({
 export function Input({ className = "", ...props }: InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
-      className={`focus-ring min-h-11 w-full rounded-lg border border-line bg-white px-3.5 text-sm text-ink placeholder:text-sage/70 ${className}`}
+      className={`focus-ring min-h-11 w-full border border-line bg-white px-3.5 text-[14.5px] text-ink placeholder:text-sage/70 ${className}`}
       {...props}
     />
   );
@@ -58,7 +59,7 @@ export function Textarea({
 }: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <textarea
-      className={`focus-ring min-h-28 w-full resize-y rounded-lg border border-line bg-white px-3.5 py-3 text-sm text-ink placeholder:text-sage/70 ${className}`}
+      className={`focus-ring min-h-28 w-full resize-y border border-line bg-white px-3.5 py-3 text-[14.5px] text-ink placeholder:text-sage/70 ${className}`}
       {...props}
     />
   );
@@ -70,7 +71,7 @@ export function Select({
 }: React.SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <select
-      className={`focus-ring min-h-11 w-full rounded-lg border border-line bg-white px-3.5 text-sm text-ink ${className}`}
+      className={`focus-ring min-h-11 w-full border border-line bg-white px-3.5 text-[14.5px] text-ink ${className}`}
       {...props}
     />
   );
@@ -85,7 +86,7 @@ export function Badge({ children, tone = "neutral" }: { children: ReactNode; ton
     danger: "bg-red-50 text-red-800",
   };
   return (
-    <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ${tones[tone] ?? tones.neutral}`}>
+    <span className={`inline-flex rounded-full px-2.5 py-1 text-[11.5px] font-bold ${tones[tone] ?? tones.neutral}`}>
       {children}
     </span>
   );
@@ -116,7 +117,7 @@ export function EmptyState({
   return (
     <div className="grid min-h-56 place-items-center border border-dashed border-line bg-paper/60 p-8 text-center">
       <div className="max-w-sm">
-        <h3 className="text-lg font-bold text-ink">{title}</h3>
+        <h3 className="text-lg font-semibold text-ink">{title}</h3>
         <p className="mt-2 text-sm leading-6 text-sage">{description}</p>
         {action ? <div className="mt-5">{action}</div> : null}
       </div>
