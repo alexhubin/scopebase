@@ -21,6 +21,7 @@ services:
     environment:
       MINIO_ROOT_USER: scopebase
       MINIO_ROOT_PASSWORD: scopebase-secret
+      MINIO_API_CORS_ALLOW_ORIGIN: http://localhost:3000,http://localhost:5173
     ports:
       - "9001:9001"
     healthcheck:
