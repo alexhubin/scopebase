@@ -162,6 +162,18 @@ export interface PublicLink {
   expires_at: string | null;
 }
 
+export interface UploadTarget {
+  upload_url: string;
+  storage_key: string;
+  headers: Record<string, string>;
+  expires_in: number;
+}
+
+export interface DownloadTarget {
+  url: string;
+  expires_in: number;
+}
+
 export interface PublicBrief {
   project_name: string;
   client_name: string;

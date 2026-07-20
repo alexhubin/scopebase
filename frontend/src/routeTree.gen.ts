@@ -14,8 +14,10 @@ import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppProjectsIndexRouteImport } from './routes/_app/projects/index'
 import { Route as AppProjectsProjectIdRouteRouteImport } from './routes/_app/projects/$projectId/route'
 import { Route as AppProjectsProjectIdIndexRouteImport } from './routes/_app/projects/$projectId/index'
+import { Route as AppProjectsProjectIdActivityRouteImport } from './routes/_app/projects/$projectId/activity'
 import { Route as AppProjectsProjectIdBriefRouteImport } from './routes/_app/projects/$projectId/brief'
 import { Route as AppProjectsProjectIdChangesRouteImport } from './routes/_app/projects/$projectId/changes'
+import { Route as AppProjectsProjectIdFilesRouteImport } from './routes/_app/projects/$projectId/files'
 import { Route as AppProjectsProjectIdScopeRouteImport } from './routes/_app/projects/$projectId/scope'
 
 const IndexRoute = IndexRouteImport.update({
@@ -74,6 +76,12 @@ const AppProjectsProjectIdIndexRoute =
     path: '/',
     getParentRoute: () => AppProjectsProjectIdRouteRoute,
   } as any)
+const AppProjectsProjectIdActivityRoute =
+  AppProjectsProjectIdActivityRouteImport.update({
+    id: '/activity',
+    path: '/activity',
+    getParentRoute: () => AppProjectsProjectIdRouteRoute,
+  } as any)
 const AppProjectsProjectIdBriefRoute =
   AppProjectsProjectIdBriefRouteImport.update({
     id: '/brief',
@@ -84,6 +92,12 @@ const AppProjectsProjectIdChangesRoute =
   AppProjectsProjectIdChangesRouteImport.update({
     id: '/changes',
     path: '/changes',
+    getParentRoute: () => AppProjectsProjectIdRouteRoute,
+  } as any)
+const AppProjectsProjectIdFilesRoute =
+  AppProjectsProjectIdFilesRouteImport.update({
+    id: '/files',
+    path: '/files',
     getParentRoute: () => AppProjectsProjectIdRouteRoute,
   } as any)
 const AppProjectsProjectIdScopeRoute =
@@ -103,8 +117,10 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AppSettingsRoute
   '/projects/$projectId': typeof AppProjectsProjectIdRouteRouteWithChildren
   '/projects/': typeof AppProjectsIndexRoute
+  '/projects/$projectId/activity': typeof AppProjectsProjectIdActivityRoute
   '/projects/$projectId/brief': typeof AppProjectsProjectIdBriefRoute
   '/projects/$projectId/changes': typeof AppProjectsProjectIdChangesRoute
+  '/projects/$projectId/files': typeof AppProjectsProjectIdFilesRoute
   '/projects/$projectId/scope': typeof AppProjectsProjectIdScopeRoute
   '/projects/$projectId/': typeof AppProjectsProjectIdIndexRoute
 }
@@ -117,8 +133,10 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
   '/projects': typeof AppProjectsIndexRoute
+  '/projects/$projectId/activity': typeof AppProjectsProjectIdActivityRoute
   '/projects/$projectId/brief': typeof AppProjectsProjectIdBriefRoute
   '/projects/$projectId/changes': typeof AppProjectsProjectIdChangesRoute
+  '/projects/$projectId/files': typeof AppProjectsProjectIdFilesRoute
   '/projects/$projectId/scope': typeof AppProjectsProjectIdScopeRoute
   '/projects/$projectId': typeof AppProjectsProjectIdIndexRoute
 }
@@ -134,8 +152,10 @@ export interface FileRoutesById {
   '/_app/settings': typeof AppSettingsRoute
   '/_app/projects/$projectId': typeof AppProjectsProjectIdRouteRouteWithChildren
   '/_app/projects/': typeof AppProjectsIndexRoute
+  '/_app/projects/$projectId/activity': typeof AppProjectsProjectIdActivityRoute
   '/_app/projects/$projectId/brief': typeof AppProjectsProjectIdBriefRoute
   '/_app/projects/$projectId/changes': typeof AppProjectsProjectIdChangesRoute
+  '/_app/projects/$projectId/files': typeof AppProjectsProjectIdFilesRoute
   '/_app/projects/$projectId/scope': typeof AppProjectsProjectIdScopeRoute
   '/_app/projects/$projectId/': typeof AppProjectsProjectIdIndexRoute
 }
@@ -151,8 +171,10 @@ export interface FileRouteTypes {
     | '/settings'
     | '/projects/$projectId'
     | '/projects/'
+    | '/projects/$projectId/activity'
     | '/projects/$projectId/brief'
     | '/projects/$projectId/changes'
+    | '/projects/$projectId/files'
     | '/projects/$projectId/scope'
     | '/projects/$projectId/'
   fileRoutesByTo: FileRoutesByTo
@@ -165,8 +187,10 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/settings'
     | '/projects'
+    | '/projects/$projectId/activity'
     | '/projects/$projectId/brief'
     | '/projects/$projectId/changes'
+    | '/projects/$projectId/files'
     | '/projects/$projectId/scope'
     | '/projects/$projectId'
   id:
@@ -181,8 +205,10 @@ export interface FileRouteTypes {
     | '/_app/settings'
     | '/_app/projects/$projectId'
     | '/_app/projects/'
+    | '/_app/projects/$projectId/activity'
     | '/_app/projects/$projectId/brief'
     | '/_app/projects/$projectId/changes'
+    | '/_app/projects/$projectId/files'
     | '/_app/projects/$projectId/scope'
     | '/_app/projects/$projectId/'
   fileRoutesById: FileRoutesById
@@ -275,6 +301,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProjectsProjectIdIndexRouteImport
       parentRoute: typeof AppProjectsProjectIdRouteRoute
     }
+    '/_app/projects/$projectId/activity': {
+      id: '/_app/projects/$projectId/activity'
+      path: '/activity'
+      fullPath: '/projects/$projectId/activity'
+      preLoaderRoute: typeof AppProjectsProjectIdActivityRouteImport
+      parentRoute: typeof AppProjectsProjectIdRouteRoute
+    }
     '/_app/projects/$projectId/brief': {
       id: '/_app/projects/$projectId/brief'
       path: '/brief'
@@ -289,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProjectsProjectIdChangesRouteImport
       parentRoute: typeof AppProjectsProjectIdRouteRoute
     }
+    '/_app/projects/$projectId/files': {
+      id: '/_app/projects/$projectId/files'
+      path: '/files'
+      fullPath: '/projects/$projectId/files'
+      preLoaderRoute: typeof AppProjectsProjectIdFilesRouteImport
+      parentRoute: typeof AppProjectsProjectIdRouteRoute
+    }
     '/_app/projects/$projectId/scope': {
       id: '/_app/projects/$projectId/scope'
       path: '/scope'
@@ -300,16 +340,20 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppProjectsProjectIdRouteRouteChildren {
+  AppProjectsProjectIdActivityRoute: typeof AppProjectsProjectIdActivityRoute
   AppProjectsProjectIdBriefRoute: typeof AppProjectsProjectIdBriefRoute
   AppProjectsProjectIdChangesRoute: typeof AppProjectsProjectIdChangesRoute
+  AppProjectsProjectIdFilesRoute: typeof AppProjectsProjectIdFilesRoute
   AppProjectsProjectIdScopeRoute: typeof AppProjectsProjectIdScopeRoute
   AppProjectsProjectIdIndexRoute: typeof AppProjectsProjectIdIndexRoute
 }
 
 const AppProjectsProjectIdRouteRouteChildren: AppProjectsProjectIdRouteRouteChildren =
   {
+    AppProjectsProjectIdActivityRoute: AppProjectsProjectIdActivityRoute,
     AppProjectsProjectIdBriefRoute: AppProjectsProjectIdBriefRoute,
     AppProjectsProjectIdChangesRoute: AppProjectsProjectIdChangesRoute,
+    AppProjectsProjectIdFilesRoute: AppProjectsProjectIdFilesRoute,
     AppProjectsProjectIdScopeRoute: AppProjectsProjectIdScopeRoute,
     AppProjectsProjectIdIndexRoute: AppProjectsProjectIdIndexRoute,
   }
