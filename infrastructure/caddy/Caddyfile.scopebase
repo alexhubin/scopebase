@@ -11,15 +11,3 @@ scopebase.46.225.131.55.sslip.io {
     Permissions-Policy "camera=(), microphone=(), geolocation=()"
   }
 }
-
-scopebase-storage.46.225.131.55.sslip.io {
-  reverse_proxy scopebase-storage:9000
-
-  header {
-    -Server
-    Strict-Transport-Security "max-age=31536000"
-    X-Content-Type-Options "nosniff"
-    X-Frame-Options "DENY"
-    Referrer-Policy "no-referrer"
-  }
-}
