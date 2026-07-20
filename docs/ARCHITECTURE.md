@@ -60,9 +60,8 @@ All feature limits are enforced by backend workflows. The frontend may explain a
 
 Development Compose includes PostgreSQL, MinIO, Mailpit, backend, frontend, and Caddy.
 
-The production Compose project exposes only two loopback ports:
+The production Compose project exposes one application loopback port:
 
 - `127.0.0.1:3080` for the internal ScopeBase gateway;
-- `127.0.0.1:3090` for the S3-compatible endpoint.
 
-The VPS's existing Caddy instance terminates TLS and proxies the application and storage hostnames. A host-level Caddy can use the loopback ports. A containerized Caddy shares one external Docker network with only the ScopeBase gateway and storage services and uses their stable aliases. ScopeBase does not bind the host's public HTTP or HTTPS ports.
+Cloudflare R2 provides production object storage through its S3-compatible HTTPS API. The API issues short-lived presigned PUT and GET URLs so file bytes travel directly between the browser and R2. The VPS's existing Caddy instance terminates TLS and proxies only the application hostname. A host-level Caddy uses the loopback port; a containerized Caddy shares one external Docker network with only the ScopeBase gateway. ScopeBase does not bind the host's public HTTP or HTTPS ports.

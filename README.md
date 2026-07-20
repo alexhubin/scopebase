@@ -151,9 +151,11 @@ Use `.env.example` for local development and `.env.production.example` as the pr
 | `CORS_ORIGINS` | Comma-separated trusted browser origins |
 | `COOKIE_SECURE` | Requires HTTPS for refresh cookies in production |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_FROM` | Transactional email transport |
+| `STORAGE_PROVIDER` | `minio` for local development or `r2` in production |
 | `S3_ENDPOINT_URL` | Backend-to-storage endpoint |
 | `S3_PUBLIC_ENDPOINT_URL` | Browser-accessible endpoint used in presigned URLs |
 | `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_BUCKET` | Object-storage credentials and bucket |
+| `S3_REGION`, `S3_AUTO_CREATE_BUCKET` | Provider region and runtime bucket provisioning policy |
 | `MAX_UPLOAD_BYTES` | Per-file size ceiling |
 | `BILLING_ADAPTER` | `local` or `stripe` |
 | `STRIPE_SECRET_KEY` | Stripe server key |
@@ -204,7 +206,7 @@ The integration suite covers authentication, authorization, public-link isolatio
 
 ## Deployment
 
-ScopeBase is prepared for a single VPS without taking ownership of the host's existing ports `80` and `443`. The production stack binds its internal gateway to `127.0.0.1:3080` and MinIO to `127.0.0.1:3090`; the existing Caddy instance remains responsible for public HTTPS. A containerized Caddy can instead reach stable service aliases over the configured external Docker network.
+ScopeBase is prepared for a single VPS without taking ownership of the host's existing ports `80` and `443`. The production stack binds only its internal gateway to `127.0.0.1:3080`, uses Cloudflare R2 for object storage, and leaves the existing Caddy instance responsible for public HTTPS. A containerized Caddy can instead reach the stable gateway alias over the configured external Docker network.
 
 ```bash
 cp .env.production.example .env.production

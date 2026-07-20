@@ -4,12 +4,11 @@ This guide assumes Docker Compose v2 and an existing Caddy installation. ScopeBa
 
 ## DNS
 
-Create two DNS records pointing to the VPS:
+Create one DNS record pointing to the VPS:
 
-- the application hostname, such as `scopebase.example.com`;
-- the object-storage hostname, such as `scopebase-storage.example.com`.
+- the application hostname, such as `scopebase.example.com`.
 
-Both hostnames must resolve before Caddy requests certificates. An `sslip.io` hostname may be used for a demonstration deployment without managing DNS.
+The hostname must resolve before Caddy requests a certificate. An `sslip.io` hostname may be used for a demonstration deployment without managing DNS. R2 presigned URLs use Cloudflare's S3 API domain directly and do not need a VPS DNS record.
 
 ## Prepare the project
 
@@ -31,10 +30,28 @@ Required production choices:
 - matching PostgreSQL credentials and `DATABASE_URL`;
 - HTTPS application and public-link URLs;
 - `COOKIE_SECURE=true`;
-- a browser-accessible HTTPS `S3_PUBLIC_ENDPOINT_URL`;
-- the application origin in `S3_CORS_ORIGINS`;
+- `STORAGE_PROVIDER=r2`;
+- identical `S3_ENDPOINT_URL` and `S3_PUBLIC_ENDPOINT_URL` values using `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` without a bucket path;
+- `S3_REGION=auto` and `S3_AUTO_CREATE_BUCKET=false`;
+- an R2 Object Read & Write token scoped to the production bucket;
 - real SMTP settings;
 - either the isolated local billing adapter or complete Stripe credentials.
+
+Create the bucket before deployment. Configure its CORS policy in the Cloudflare dashboard or with Wrangler so the application can use presigned URLs from a browser:
+
+```json
+[
+  {
+    "AllowedOrigins": ["https://scopebase.example.com"],
+    "AllowedMethods": ["GET", "PUT", "HEAD"],
+    "AllowedHeaders": ["Content-Type"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 3600
+  }
+]
+```
+
+Use the exact production origin rather than `*`. See Cloudflare's [R2 authentication](https://developers.cloudflare.com/r2/api/tokens/), [CORS](https://developers.cloudflare.com/r2/buckets/cors/), and [presigned URL](https://developers.cloudflare.com/r2/api/s3/presigned-urls/) documentation.
 
 The production Compose file includes Mailpit on a loopback-only port for portfolio and staging deployments without SMTP credentials. Replace `SMTP_HOST=mailpit` with a real authenticated provider before using ScopeBase for real client communication.
 
@@ -46,7 +63,7 @@ Validate the rendered configuration and inspect port ownership before starting:
 
 ```bash
 docker compose --env-file .env.production -f docker-compose.production.yml config --quiet
-ss -lntp | grep -E ':3080|:3090' || true
+ss -lntp | grep ':3080' || true
 ```
 
 Build and start:
@@ -66,10 +83,6 @@ For a host-level Caddy installation, proxy to the loopback ports:
 scopebase.example.com {
   reverse_proxy 127.0.0.1:3080
 }
-
-scopebase-storage.example.com {
-  reverse_proxy 127.0.0.1:3090
-}
 ```
 
 Format and validate before reloading:
@@ -82,15 +95,11 @@ systemctl reload caddy
 
 Use the host's actual Caddy service or container workflow if it differs. Never replace the complete configuration with the example above.
 
-For a containerized Caddy installation, attach only the ScopeBase gateway and storage services to Caddy's existing external network. Set `CADDY_NETWORK` to its exact name and route to the stable aliases:
+For a containerized Caddy installation, attach only the ScopeBase gateway to Caddy's existing external network. Set `CADDY_NETWORK` to its exact name and route to the stable alias:
 
 ```caddyfile
 scopebase.example.com {
   reverse_proxy scopebase-gateway:80
-}
-
-scopebase-storage.example.com {
-  reverse_proxy scopebase-storage:9000
 }
 ```
 
@@ -111,7 +120,7 @@ Then verify HTTPS, authentication, client links, an object upload, Mail delivery
 Inspect logs without printing the environment file:
 
 ```bash
-docker compose --env-file .env.production -f docker-compose.production.yml logs --tail=200 backend frontend gateway minio
+docker compose --env-file .env.production -f docker-compose.production.yml logs --tail=200 backend frontend gateway
 ```
 
 ## Seed the portfolio demo
@@ -144,7 +153,7 @@ Create consistent PostgreSQL dumps on a schedule and copy them off the VPS:
 docker compose --env-file .env.production -f docker-compose.production.yml exec -T postgres pg_dump -U scopebase -d scopebase -Fc > scopebase.dump
 ```
 
-Back up the MinIO volume or replicate its bucket to independent object storage. Database-only backups are incomplete because PostgreSQL stores file metadata, not file bytes.
+Back up or replicate the R2 bucket independently from PostgreSQL. Database-only backups are incomplete because PostgreSQL stores file metadata, not file bytes.
 
 Also retain the deployment commit SHA and encrypted production environment file in an approved secrets system. Test restoration on a separate machine.
 

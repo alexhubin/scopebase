@@ -20,11 +20,13 @@
 
 ## Production checklist
 
-- generate unique high-entropy values for the application, database, MinIO, SMTP, and Stripe secrets;
+- generate unique high-entropy values for the application, database, R2, SMTP, and Stripe secrets;
 - set `APP_ENV=production` and `COOKIE_SECURE=true`;
 - use only HTTPS origins in `FRONTEND_URL`, `PUBLIC_APP_URL`, `CORS_ORIGINS`, and storage CORS;
-- restrict ScopeBase and storage origin ports to loopback or a private network;
-- keep PostgreSQL and the MinIO administrative interface off the public internet;
+- restrict the ScopeBase origin port to loopback or a private network;
+- keep PostgreSQL off the public internet;
+- scope the R2 application token to Object Read & Write for the production bucket only;
+- keep R2 buckets private and use short-lived presigned URLs for browser access;
 - configure a real SMTP provider with authenticated transport;
 - configure Stripe webhooks only over HTTPS;
 - enable host firewalling, unattended security updates, log rotation, and monitoring;
