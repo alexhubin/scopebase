@@ -1,6 +1,6 @@
 import type { AuthSession } from "./types";
 
-const apiBase = import.meta.env.VITE_API_URL ?? "/api";
+const apiBase = "/api";
 let accessToken: string | null = null;
 let refreshPromise: Promise<AuthSession | null> | null = null;
 
@@ -94,4 +94,3 @@ export async function download(path: string, filename: string) {
 }
 
 export { refreshAccessToken };
-

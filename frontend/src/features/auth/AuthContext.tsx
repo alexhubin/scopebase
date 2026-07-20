@@ -1,25 +1,8 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { post, refreshAccessToken, setAccessToken } from "../../api/client";
 import type { AuthSession } from "../../api/types";
-
-interface AuthContextValue {
-  session: AuthSession | null;
-  loading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (input: SignUpInput) => Promise<void>;
-  signOut: () => Promise<void>;
-  updateSession: (session: AuthSession) => void;
-}
-
-interface SignUpInput {
-  email: string;
-  password: string;
-  full_name: string;
-  organization_name: string;
-}
-
-const AuthContext = createContext<AuthContextValue | null>(null);
+import { AuthContext, type AuthContextValue } from "./auth-context";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<AuthSession | null>(null);
@@ -60,10 +43,3 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
-
-export function useAuth() {
-  const value = useContext(AuthContext);
-  if (!value) throw new Error("useAuth must be used within AuthProvider");
-  return value;
-}
-

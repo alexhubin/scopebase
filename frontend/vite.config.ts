@@ -6,7 +6,11 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [
-    tanstackStart(),
+    tanstackStart({
+      router: {
+        routeTreeFileHeader: [],
+      },
+    }),
     nitro(),
     tailwindcss(),
     react(),
