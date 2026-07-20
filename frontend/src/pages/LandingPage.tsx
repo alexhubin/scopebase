@@ -30,7 +30,8 @@ const faqs = [
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen overflow-hidden bg-line">
+    <div className="min-h-screen bg-[#edf0ec] sm:p-5 xl:p-12">
+      <div className="mx-auto max-w-[1440px] overflow-hidden bg-line shadow-[0_24px_70px_rgba(23,63,53,0.09)] sm:border sm:border-line">
       <header className="grid grid-cols-[1fr_auto] gap-px bg-line lg:grid-cols-4">
         <div className="flex items-center bg-white px-5 py-5 sm:px-10 lg:col-span-1"><Logo /></div>
         <div className="flex items-center justify-end gap-4 bg-white px-5 py-3 text-sm font-semibold sm:px-10 lg:col-span-3 lg:gap-8">
@@ -98,7 +99,8 @@ export function LandingPage() {
         <section className="mt-px grid justify-items-center bg-forest px-5 py-[76px] text-center text-white"><h2 className="max-w-[720px] text-[38px] font-semibold leading-tight tracking-[-0.02em] sm:text-[44px]">Your next project deserves a clean start.</h2><p className="mt-4 max-w-[520px] text-[16.5px] leading-[1.6] text-white/65">Create a workspace, send your first brief link, and get an approved scope this week.</p><Link to="/sign-up" className="focus-ring mt-[30px] bg-coral px-[30px] py-4 text-[15px] font-bold">Start free — no card required</Link><p className="mt-3.5 text-[13px] text-white/45">No credit card · One active project free · Cancel anytime</p></section>
       </main>
 
-      <footer className="mt-px grid gap-px bg-line text-[13px] text-sage sm:grid-cols-4"><span className="bg-white px-6 py-5 sm:px-10">© 2026 ScopeBase</span><div className="flex gap-6 bg-white px-6 py-5 sm:col-span-2 sm:px-10"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:hello@scopebase.app">Contact</a></div><span className="bg-white px-6 py-5 sm:px-10 sm:text-right">Made for client work</span></footer>
+        <footer className="mt-px grid gap-px bg-line text-[13px] text-sage sm:grid-cols-4"><span className="bg-white px-6 py-5 sm:px-10">© 2026 ScopeBase</span><div className="flex gap-6 bg-white px-6 py-5 sm:col-span-2 sm:px-10"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:hello@scopebase.app">Contact</a></div><span className="bg-white px-6 py-5 sm:px-10 sm:text-right">Made for client work</span></footer>
+      </div>
     </div>
   );
 }
