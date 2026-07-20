@@ -42,8 +42,8 @@ export function SignInPage() {
         <Field label="Email" error={errors.email?.message}><Input type="email" autoComplete="email" {...register("email")} /></Field>
         <Field label="Password" error={errors.password?.message}><Input type="password" autoComplete="current-password" {...register("password")} /></Field>
         <div className="-mt-2 text-right"><Link to="/forgot-password" className="text-xs font-bold text-sage hover:text-forest">Forgot password?</Link></div>
-        {serverError ? <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm font-semibold text-red-800">{serverError}</p> : null}
-        <Button type="submit" disabled={isSubmitting} className="w-full">{isSubmitting ? "Signing in…" : "Sign in"}</Button>
+        {serverError ? <p role="alert" className="bg-red-50 p-3 text-sm font-semibold text-red-800">{serverError}</p> : null}
+        <Button variant="accent" type="submit" disabled={isSubmitting} className="min-h-12 w-full text-[15px]">{isSubmitting ? "Signing in…" : "Sign in"}</Button>
       </form>
     </AuthFrame>
   );
@@ -56,7 +56,7 @@ export function SignUpPage() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignUpValues>({ resolver: zodResolver(signUpSchema) });
 
   return (
-    <AuthFrame title="Start with a clearer scope" description="Create your workspace and invite a client when you are ready." footer={<><span>Already have an account?</span> <Link to="/sign-in" className="font-bold text-forest underline-offset-4 hover:underline">Sign in</Link></>}>
+    <AuthFrame signup title="Start with a clearer scope" description="Create your workspace and invite a client when you are ready." footer={<><span>Already have an account?</span> <Link to="/sign-in" className="font-bold text-forest underline-offset-4 hover:underline">Sign in</Link></>}>
       <form className="grid gap-4" onSubmit={(event) => void handleSubmit(async (values) => {
         setServerError("");
         try {
@@ -72,8 +72,8 @@ export function SignUpPage() {
         </div>
         <Field label="Work email" error={errors.email?.message}><Input type="email" autoComplete="email" {...register("email")} /></Field>
         <Field label="Password" error={errors.password?.message} hint="At least 10 characters with a letter and number"><Input type="password" autoComplete="new-password" {...register("password")} /></Field>
-        {serverError ? <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm font-semibold text-red-800">{serverError}</p> : null}
-        <Button type="submit" disabled={isSubmitting} className="mt-1 w-full">{isSubmitting ? "Creating workspace…" : "Create free workspace"}</Button>
+        {serverError ? <p role="alert" className="bg-red-50 p-3 text-sm font-semibold text-red-800">{serverError}</p> : null}
+        <Button variant="accent" type="submit" disabled={isSubmitting} className="mt-1 min-h-12 w-full text-[15px]">{isSubmitting ? "Creating workspace…" : "Create free workspace"}</Button>
       </form>
     </AuthFrame>
   );
@@ -84,10 +84,10 @@ export function ForgotPasswordPage() {
   const [sent, setSent] = useState(false);
   return (
     <AuthFrame title={sent ? "Check your inbox" : "Reset your password"} description={sent ? "If an account exists, a secure reset link is on its way." : "Enter your account email and we will send a one-hour reset link."} footer={<Link to="/sign-in" className="inline-flex items-center gap-2 font-bold text-forest"><ArrowLeft size={14} /> Back to sign in</Link>}>
-      {sent ? <div className="rounded-lg bg-mint p-5 text-sm leading-6 text-forest">For local development, open Mailpit at <strong>localhost:8025</strong>.</div> : (
+      {sent ? <div className="bg-mint p-5 text-sm leading-6 text-forest">For local development, open Mailpit at <strong>localhost:8025</strong>.</div> : (
         <form className="grid gap-5" onSubmit={(event) => { event.preventDefault(); void post("/auth/forgot-password", { email }).then(() => setSent(true)); }}>
           <Field label="Email"><Input type="email" required value={email} onChange={(event) => setEmail(event.target.value)} /></Field>
-          <Button type="submit" className="w-full">Send reset link</Button>
+          <Button variant="accent" type="submit" className="min-h-12 w-full">Send reset link</Button>
         </form>
       )}
     </AuthFrame>
@@ -115,31 +115,32 @@ export function ResetPasswordPage({ token }: { token: string }) {
           .finally(() => setSubmitting(false));
       }}>
         <Field label="New password"><Input type="password" minLength={10} required autoComplete="new-password" value={password} onChange={(event) => setPassword(event.target.value)} /></Field>
-        {error ? <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm font-semibold text-red-800">{error}</p> : null}
-        <Button type="submit" disabled={submitting} className="w-full">{submitting ? "Updating…" : "Update password"}</Button>
+        {error ? <p role="alert" className="bg-red-50 p-3 text-sm font-semibold text-red-800">{error}</p> : null}
+        <Button variant="accent" type="submit" disabled={submitting} className="min-h-12 w-full">{submitting ? "Updating…" : "Update password"}</Button>
       </form>
     </AuthFrame>
   );
 }
 
-function AuthFrame({ title, description, children, footer }: { title: string; description: string; children: React.ReactNode; footer: React.ReactNode }) {
+function AuthFrame({ title, description, children, footer, signup = false }: { title: string; description: string; children: React.ReactNode; footer: React.ReactNode; signup?: boolean }) {
   return (
     <main className="grid min-h-screen lg:grid-cols-[0.9fr_1.1fr]">
       <section className="hidden bg-forest p-12 text-white lg:flex lg:flex-col">
         <Logo light />
-        <div className="my-auto max-w-lg">
-          <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-coral">Built for client work</p>
-          <blockquote className="mt-6 text-4xl font-extrabold leading-tight tracking-[-0.04em]">“The project gets easier when everyone can see exactly what was agreed.”</blockquote>
-          <p className="mt-6 text-sm leading-6 text-white/55">Collect the brief. Publish the scope. Record the decision. Keep changes explicit.</p>
+        <div className="my-auto max-w-[480px]">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-coral">{signup ? "Free to start" : "Built for client work"}</p>
+          <p className="mt-[22px] font-display text-[34px] font-semibold leading-[1.25] tracking-[-0.02em]">{signup ? "Run your next project on one shared record — brief to approved change." : "“The project gets easier when everyone can see exactly what was agreed.”"}</p>
+          {signup ? <div className="mt-[26px] grid gap-3 text-[15px] text-white/75">{["One active project free, no card", "Clients never need an account", "Every decision recorded on a version"].map((item) => <span key={item} className="flex gap-2.5"><span className="font-bold text-coral">✓</span>{item}</span>)}</div> : <p className="mt-5 text-[15px] leading-[1.7] text-white/60">Collect the brief. Publish the scope. Record the decision. Keep changes explicit.</p>}
         </div>
+        <span className={`${signup ? "text-white/45" : "border-t border-white/15 pt-6 text-white/55"} text-[12.5px] leading-[1.6]`}>{signup ? "Free plan: one active project, no credit card" : "Clients never need an account — briefs and approvals work through secure links."}</span>
       </section>
-      <section className="flex items-center justify-center px-5 py-12 sm:px-10">
-        <div className="w-full max-w-md animate-rise">
+      <section className="flex items-center justify-center bg-paper px-5 py-12 sm:px-10 lg:p-12">
+        <div className={`w-full animate-rise ${signup ? "max-w-[440px]" : "max-w-[400px]"}`}>
           <div className="mb-10 lg:hidden"><Logo /></div>
-          <h1 className="text-3xl font-extrabold tracking-[-0.035em] text-ink">{title}</h1>
-          <p className="mt-3 text-sm leading-6 text-sage">{description}</p>
+          <h1 className="font-display text-[32px] font-semibold tracking-[-0.02em] text-ink">{title}</h1>
+          <p className="mt-2.5 text-[15px] leading-[1.6] text-[#52625d]">{description}</p>
           <div className="mt-8">{children}</div>
-          <div className="mt-7 flex gap-1.5 text-sm text-sage">{footer}</div>
+          <div className="mt-6 flex gap-1.5 text-sm text-[#52625d]">{footer}</div>
         </div>
       </section>
     </main>
