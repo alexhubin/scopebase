@@ -124,7 +124,7 @@ export function ResetPasswordPage({ token }: { token: string }) {
 
 function AuthFrame({ title, description, children, footer, signup = false }: { title: string; description: string; children: React.ReactNode; footer: React.ReactNode; signup?: boolean }) {
   return (
-    <main className="grid min-h-screen lg:grid-cols-[0.9fr_1.1fr]">
+    <main className="grid min-h-screen lg:grid-cols-2">
       <section className="hidden bg-forest p-12 text-white lg:flex lg:flex-col">
         <Logo light />
         <div className="my-auto max-w-[480px]">

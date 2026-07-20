@@ -31,10 +31,10 @@ export function ProjectOverviewPage() {
         <Panel>
           <div className="flex min-h-14 items-center border-b border-line px-6 py-3"><h3 className="text-base font-semibold">Project timeline</h3></div>
           <div className="grid gap-px bg-[#eceee9] sm:grid-cols-2 xl:grid-cols-4">
-            <TimelineStep state={stepState(project.status, 0)} title="Brief" detail="Client requirements" />
-            <TimelineStep state={stepState(project.status, 1)} title="Scope drafted" detail="Versioned agreement" />
-            <TimelineStep state={stepState(project.status, 2)} title="Approval" detail="Client decision" />
-            <TimelineStep state={stepState(project.status, 3)} title="Delivery" detail={shortDate(project.target_delivery_date)} />
+            <TimelineStep number={1} state={stepState(project.status, 0)} title="Brief" detail="Client requirements" />
+            <TimelineStep number={2} state={stepState(project.status, 1)} title="Scope drafted" detail="Versioned agreement" />
+            <TimelineStep number={3} state={stepState(project.status, 2)} title="Approval" detail="Client decision" />
+            <TimelineStep number={4} state={stepState(project.status, 3)} title="Delivery" detail={shortDate(project.target_delivery_date)} />
           </div>
         </Panel>
       </div>
@@ -52,8 +52,8 @@ function Info({ label, value }: { label: string; value: string }) {
   return <div className="px-[22px] py-4"><p className="text-[12.5px] text-sage">{label}</p><p className="mt-1 text-[14.5px] font-bold capitalize text-ink">{value}</p></div>;
 }
 
-function TimelineStep({ state, title, detail }: { state: "done" | "current" | "upcoming"; title: string; detail: string }) {
-  return <div className={`bg-white px-5 py-[18px] ${state === "current" ? "!bg-amber-50" : ""}`}><span className={`grid size-[26px] place-items-center rounded-full text-xs font-bold ${state === "done" ? "bg-[#087a55] text-white" : state === "current" ? "bg-[#9a5d08] text-white" : "border border-line text-sage"}`}>{state === "done" ? <Check size={14} /> : state === "current" ? "…" : "4"}</span><strong className={`mt-2.5 block text-[13.5px] ${state === "upcoming" ? "text-sage" : ""}`}>{title}</strong><span className={`mt-0.5 block text-xs ${state === "current" ? "text-[#9a5d08]" : "text-sage"}`}>{detail}</span></div>;
+function TimelineStep({ number, state, title, detail }: { number: number; state: "done" | "current" | "upcoming"; title: string; detail: string }) {
+  return <div className={`bg-white px-5 py-[18px] ${state === "current" ? "!bg-amber-50" : ""}`}><span className={`grid size-[26px] place-items-center rounded-full text-xs font-bold ${state === "done" ? "bg-[#087a55] text-white" : state === "current" ? "bg-[#9a5d08] text-white" : "border border-line text-sage"}`}>{state === "done" ? <Check size={14} /> : state === "current" ? "…" : number}</span><strong className={`mt-2.5 block text-[13.5px] ${state === "upcoming" ? "text-sage" : ""}`}>{title}</strong><span className={`mt-0.5 block text-xs ${state === "current" ? "text-[#9a5d08]" : "text-sage"}`}>{detail}</span></div>;
 }
 
 function stepState(status: Project["status"], index: number): "done" | "current" | "upcoming" {
