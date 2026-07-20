@@ -13,7 +13,7 @@
 
 - Typography: Public Sans and Space Grotesk match the source hierarchy, weights, and compact headline rhythm.
 - Layout: the four-column editorial grid, two-column hero, problem rail, paired workflow rows, audience cards, pricing, FAQ, CTA, and footer have been rebuilt from the supplied landing design.
-- Spacing: the source's larger vertical rhythm is preserved while retaining the previously requested inset desktop frame and reduced top inset.
+- Spacing: the source's larger vertical rhythm is preserved in a full-bleed page with no outer frame, side gutters, maximum-width cap, or top inset.
 - Colors and borders: forest, coral, mint, paper, sand, and line treatments match the supplied palette.
 - Content: all six FAQ entries, full plan features, audience benefits, problem examples, workflow explanations, and client-facing screens are present.
 - Assets: the design contains no raster imagery. The cursor decoration uses the project's existing Lucide icon library.
@@ -37,5 +37,11 @@
 ## Findings
 
 - No actionable P0, P1, or P2 findings remain.
+
+## Comparison history
+
+- Earlier P1: the implementation retained an inset presentation frame while the selected landing source is full bleed.
+- Fix: removed outer padding, maximum width, border, and frame shadow so every section reaches the viewport edges.
+- Post-fix evidence: desktop capture shows the header, hero, and following grid aligned directly to both viewport edges; mobile remains at `clientWidth: 390` and `scrollWidth: 390`.
 
 final result: passed

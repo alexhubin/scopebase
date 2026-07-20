@@ -27,8 +27,8 @@ const faqs = [
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#eef0ec] sm:px-5 sm:pb-5 sm:pt-3 xl:px-12 xl:pb-12 xl:pt-6">
-      <div className="mx-auto max-w-[1440px] overflow-hidden bg-line shadow-[0_24px_70px_rgba(23,63,53,0.09)] sm:border sm:border-line">
+    <div className="min-h-screen bg-[#eef0ec]">
+      <div className="overflow-hidden bg-line">
         <header className="sticky top-0 z-20 grid grid-cols-[1fr_auto] gap-px border-b border-line bg-line lg:grid-cols-4">
           <div className="flex items-center bg-white px-5 py-5 sm:px-10 lg:py-6 xl:px-12"><Logo /></div>
           <div className="flex items-center justify-end gap-4 bg-white px-5 py-3 text-sm font-semibold sm:px-10 lg:col-span-3 lg:gap-8 xl:px-12">
