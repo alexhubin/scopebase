@@ -1,9 +1,16 @@
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
+import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    tanstackStart(),
+    nitro(),
+    tailwindcss(),
+    react(),
+  ],
   server: {
     port: 5173,
     proxy: {
@@ -20,4 +27,3 @@ export default defineConfig({
     css: true,
   },
 });
-

@@ -57,6 +57,7 @@ services:
   frontend:
     build:
       context: ./frontend
+      target: development
     environment:
       VITE_API_URL: /api
     volumes:
@@ -88,4 +89,3 @@ volumes:
   frontend_modules:
   caddy_data:
   caddy_config:
-
