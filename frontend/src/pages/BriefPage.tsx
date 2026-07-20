@@ -184,10 +184,10 @@ export function BriefPage() {
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
         <div>
           <div className="flex items-center gap-3">
-            <h2 className="text-2xl font-extrabold tracking-[-0.03em] text-ink">Client brief</h2>
+            <h2 className="text-[22px] font-semibold text-ink">Client brief</h2>
             {brief.data ? <Badge tone={brief.data.status === "submitted" ? "success" : brief.data.status === "sent" ? "warning" : "neutral"}>{brief.data.status.replaceAll("_", " ")}</Badge> : null}
           </div>
-          <p className="mt-2 text-sm leading-6 text-sage">Collect the decisions and source material needed to define the scope.</p>
+          <p className="mt-1.5 text-[14.5px] leading-6 text-[#52625d]">Collect the decisions and source material needed to define the scope.</p>
         </div>
         <div className="flex flex-wrap gap-2">
           {draft ? <BriefPreview draft={draft} /> : null}
@@ -198,14 +198,14 @@ export function BriefPage() {
 
       {publicLink ? (
         <Panel className="flex flex-col gap-4 border-forest bg-mint/50 p-5 sm:flex-row sm:items-center sm:justify-between">
-          <div className="min-w-0"><p className="flex items-center gap-2 text-sm font-extrabold"><Check size={17} /> Client invitation is ready</p><p className="mt-1 truncate text-xs text-sage">{publicLink}</p></div>
+          <div className="min-w-0"><p className="flex items-center gap-2 text-sm font-bold"><Check size={17} /> Client invitation is ready</p><p className="mt-1 truncate text-xs text-sage">{publicLink}</p></div>
           <Button variant="secondary" onClick={() => void copyLink()}><Clipboard size={16} /> Copy link</Button>
         </Panel>
       ) : null}
 
       {!draft && isMissing ? (
         <Panel className="p-6">
-          <div className="flex items-start gap-4"><span className="grid size-11 shrink-0 place-items-center rounded-full bg-mint text-forest"><FileQuestion size={20} /></span><div><h3 className="font-extrabold">Choose a starting template</h3><p className="mt-1 text-sm leading-6 text-sage">A snapshot is saved with the project, so future template changes will not alter this brief.</p></div></div>
+          <div className="flex items-start gap-4"><span className="grid size-11 shrink-0 place-items-center bg-mint text-forest"><FileQuestion size={20} /></span><div><h3 className="font-semibold">Choose a starting template</h3><p className="mt-1 text-sm leading-6 text-sage">A snapshot is saved with the project, so future template changes will not alter this brief.</p></div></div>
           <div className="mt-6 grid gap-3 sm:grid-cols-[1fr_auto]">
             <Select value={selectedTemplate} onChange={(event) => setSelectedTemplate(event.target.value)} aria-label="Brief template">
               <option value="">Select a template</option>
@@ -218,14 +218,14 @@ export function BriefPage() {
       ) : null}
 
       {draft ? (
-        <div className="grid gap-6 xl:grid-cols-[1fr_22rem]">
+        <div className="grid gap-6 xl:grid-cols-[1fr_340px]">
           <Panel>
-            <div className="border-b border-line px-5 py-4"><h3 className="font-extrabold">Questions</h3><p className="mt-1 text-xs text-sage">Reorder and refine the client experience before publishing.</p></div>
+            <div className="flex min-h-14 items-center justify-between border-b border-line px-6 py-3"><h3 className="font-display font-semibold">Questions</h3><span className="text-[13px] text-sage">{draft.questions.length} questions · {draft.questions.filter((item) => item.required).length} required</span></div>
             <div className="divide-y divide-line">
               {draft.questions.map((item, index) => (
-                <div key={item.id} className="flex gap-4 px-5 py-4">
-                  <span className="mt-0.5 text-xs font-extrabold text-sage">{String(index + 1).padStart(2, "0")}</span>
-                  <div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><p className="font-bold text-ink">{item.label}</p>{item.required ? <Badge tone="warning">Required</Badge> : null}</div><p className="mt-1 text-xs font-semibold text-sage">{questionTypes.find((type) => type.value === item.type)?.label}{item.options.length ? ` · ${item.options.join(", ")}` : ""}</p></div>
+                <div key={item.id} className="grid min-h-16 grid-cols-[40px_1fr] items-center gap-4 px-4 py-4 sm:grid-cols-[40px_1fr_auto] sm:px-6">
+                  <span className="text-center font-display text-[13px] font-semibold text-sage">{String(index + 1).padStart(2, "0")}</span>
+                  <div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><p className="text-[14.5px] font-bold text-ink">{item.label}</p>{item.required ? <Badge tone="warning">Required</Badge> : null}</div><p className="mt-1 text-[12.5px] text-sage">{questionTypes.find((type) => type.value === item.type)?.label}{item.options.length ? ` · ${item.options.join(", ")}` : ""}</p></div>
                   {!isLocked ? <div className="flex items-start gap-1"><Button className="min-h-8 px-2" variant="ghost" aria-label="Move question up" onClick={() => moveQuestion(index, -1)} disabled={index === 0}><ArrowUp size={15} /></Button><Button className="min-h-8 px-2" variant="ghost" aria-label="Move question down" onClick={() => moveQuestion(index, 1)} disabled={index === draft.questions.length - 1}><ArrowDown size={15} /></Button><Button className="min-h-8 px-2" variant="ghost" aria-label="Edit question" onClick={() => { setEditingId(item.id); setQuestion(item); }}><Pencil size={15} /></Button><Button className="min-h-8 px-2 text-red-700" variant="ghost" aria-label="Delete question" onClick={() => setDraft({ ...draft, questions: draft.questions.filter((candidate) => candidate.id !== item.id) })}><Trash2 size={15} /></Button></div> : null}
                 </div>
               ))}
@@ -234,7 +234,7 @@ export function BriefPage() {
 
           {!isLocked ? (
             <Panel className="h-fit p-5">
-              <div className="flex items-center justify-between"><h3 className="font-extrabold">{editingId ? "Edit question" : "Add question"}</h3>{editingId ? <Button className="min-h-8 px-2" variant="ghost" onClick={() => { setEditingId(null); setQuestion(emptyQuestion); }} aria-label="Cancel editing"><X size={16} /></Button> : null}</div>
+              <div className="flex items-center justify-between"><h3 className="font-display font-semibold">{editingId ? "Edit question" : "Add question"}</h3>{editingId ? <Button className="min-h-8 px-2" variant="ghost" onClick={() => { setEditingId(null); setQuestion(emptyQuestion); }} aria-label="Cancel editing"><X size={16} /></Button> : null}</div>
               <div className="mt-5 grid gap-4">
                 <Field label="Question"><Input value={question.label} onChange={(event) => setQuestion({ ...question, label: event.target.value })} placeholder="What does success look like?" /></Field>
                 <Field label="Description"><Textarea className="min-h-20" value={question.description} onChange={(event) => setQuestion({ ...question, description: event.target.value })} placeholder="Optional context for the client" /></Field>
@@ -245,7 +245,7 @@ export function BriefPage() {
               </div>
             </Panel>
           ) : (
-            <Panel className="h-fit p-5"><h3 className="font-extrabold">Brief locked</h3><p className="mt-2 text-sm leading-6 text-sage">Published briefs preserve exactly what the client received. Send a new secure link if the current one has expired.</p></Panel>
+            <div className="grid content-start gap-6"><Panel className="p-6"><p className="text-[11px] font-bold uppercase tracking-[0.1em] text-coral">Status</p><h3 className="mt-2.5 text-[14.5px] font-bold">Brief submitted</h3><p className="mt-1 text-[13px] text-sage">The secure link closed after submission.</p><div className="mt-4 border border-[#eceee9] bg-paper p-4 text-[13px] leading-[1.6] text-[#52625d]">Send a new link if you need revised answers from the client.</div></Panel><Panel className="p-6"><p className="text-[11px] font-bold uppercase tracking-[0.1em] text-sage">Question types</p><p className="mt-3 text-[13.5px] leading-7 text-[#52625d]">Long text · Short text<br />Multiple choice · Yes / No<br />File upload · Date</p></Panel></div>
           )}
         </div>
       ) : null}
@@ -260,7 +260,7 @@ function BriefPreview({ draft }: { draft: BriefDraft }) {
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-40 bg-ink/45" />
         <Dialog.Popup className="fixed left-1/2 top-1/2 z-50 max-h-[88vh] w-[min(44rem,calc(100%-2rem))] -translate-x-1/2 -translate-y-1/2 overflow-y-auto bg-paper p-6 shadow-2xl sm:p-8">
-          <div className="flex items-start justify-between gap-4"><div><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-coral">Client preview</p><Dialog.Title className="mt-2 text-2xl font-extrabold">{draft.name}</Dialog.Title><Dialog.Description className="mt-2 text-sm leading-6 text-sage">{draft.description}</Dialog.Description></div><Dialog.Close render={<Button className="min-h-9 px-2" variant="ghost" aria-label="Close preview" />}><X size={18} /></Dialog.Close></div>
+          <div className="flex items-start justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-[0.14em] text-coral">Client preview</p><Dialog.Title className="mt-2 text-2xl font-semibold">{draft.name}</Dialog.Title><Dialog.Description className="mt-2 text-sm leading-6 text-sage">{draft.description}</Dialog.Description></div><Dialog.Close render={<Button className="min-h-9 px-2" variant="ghost" aria-label="Close preview" />}><X size={18} /></Dialog.Close></div>
           <div className="mt-7 grid gap-5">{draft.questions.map((item, index) => <div key={item.id}><p className="text-sm font-extrabold"><span className="mr-2 text-coral">{index + 1}.</span>{item.label}{item.required ? <span className="ml-1 text-coral">*</span> : null}</p>{item.description ? <p className="mt-1 text-xs text-sage">{item.description}</p> : null}<PreviewControl question={item} /></div>)}</div>
         </Dialog.Popup>
       </Dialog.Portal>
