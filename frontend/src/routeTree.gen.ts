@@ -13,6 +13,7 @@ import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppProjectsIndexRouteImport } from './routes/_app/projects/index'
 import { Route as AppProjectsProjectIdRouteRouteImport } from './routes/_app/projects/$projectId/route'
+import { Route as ClientBriefTokenRouteImport } from './routes/client/brief/$token'
 import { Route as AppProjectsProjectIdIndexRouteImport } from './routes/_app/projects/$projectId/index'
 import { Route as AppProjectsProjectIdActivityRouteImport } from './routes/_app/projects/$projectId/activity'
 import { Route as AppProjectsProjectIdBriefRouteImport } from './routes/_app/projects/$projectId/brief'
@@ -70,6 +71,11 @@ const AppProjectsProjectIdRouteRoute =
     path: '/projects/$projectId',
     getParentRoute: () => AppRoute,
   } as any)
+const ClientBriefTokenRoute = ClientBriefTokenRouteImport.update({
+  id: '/client/brief/$token',
+  path: '/client/brief/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppProjectsProjectIdIndexRoute =
   AppProjectsProjectIdIndexRouteImport.update({
     id: '/',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
   '/projects/$projectId': typeof AppProjectsProjectIdRouteRouteWithChildren
+  '/client/brief/$token': typeof ClientBriefTokenRoute
   '/projects/': typeof AppProjectsIndexRoute
   '/projects/$projectId/activity': typeof AppProjectsProjectIdActivityRoute
   '/projects/$projectId/brief': typeof AppProjectsProjectIdBriefRoute
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/sign-up': typeof SignUpRoute
   '/dashboard': typeof AppDashboardRoute
   '/settings': typeof AppSettingsRoute
+  '/client/brief/$token': typeof ClientBriefTokenRoute
   '/projects': typeof AppProjectsIndexRoute
   '/projects/$projectId/activity': typeof AppProjectsProjectIdActivityRoute
   '/projects/$projectId/brief': typeof AppProjectsProjectIdBriefRoute
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/projects/$projectId': typeof AppProjectsProjectIdRouteRouteWithChildren
+  '/client/brief/$token': typeof ClientBriefTokenRoute
   '/_app/projects/': typeof AppProjectsIndexRoute
   '/_app/projects/$projectId/activity': typeof AppProjectsProjectIdActivityRoute
   '/_app/projects/$projectId/brief': typeof AppProjectsProjectIdBriefRoute
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/settings'
     | '/projects/$projectId'
+    | '/client/brief/$token'
     | '/projects/'
     | '/projects/$projectId/activity'
     | '/projects/$projectId/brief'
@@ -186,6 +196,7 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/dashboard'
     | '/settings'
+    | '/client/brief/$token'
     | '/projects'
     | '/projects/$projectId/activity'
     | '/projects/$projectId/brief'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/_app/dashboard'
     | '/_app/settings'
     | '/_app/projects/$projectId'
+    | '/client/brief/$token'
     | '/_app/projects/'
     | '/_app/projects/$projectId/activity'
     | '/_app/projects/$projectId/brief'
@@ -220,6 +232,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
+  ClientBriefTokenRoute: typeof ClientBriefTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -293,6 +306,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/projects/$projectId'
       preLoaderRoute: typeof AppProjectsProjectIdRouteRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/client/brief/$token': {
+      id: '/client/brief/$token'
+      path: '/client/brief/$token'
+      fullPath: '/client/brief/$token'
+      preLoaderRoute: typeof ClientBriefTokenRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/projects/$projectId/': {
       id: '/_app/projects/$projectId/'
@@ -386,6 +406,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
+  ClientBriefTokenRoute: ClientBriefTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
