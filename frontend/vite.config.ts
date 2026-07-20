@@ -5,16 +5,18 @@ import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [
-    tanstackStart({
-      router: {
-        routeTreeFileHeader: [],
-      },
-    }),
-    nitro(),
-    tailwindcss(),
-    react(),
-  ],
+  plugins: process.env.VITEST
+    ? [tailwindcss(), react()]
+    : [
+        tanstackStart({
+          router: {
+            routeTreeFileHeader: [],
+          },
+        }),
+        nitro(),
+        tailwindcss(),
+        react(),
+      ],
   server: {
     port: 5173,
     proxy: {
