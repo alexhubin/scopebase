@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { CreditCard, UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -47,8 +46,8 @@ export function SettingsPage() {
     <div className="animate-rise">
       <PageHeader eyebrow="Workspace" title="Settings" description="Manage the details clients see and your ScopeBase plan." />
       <div className="grid gap-6 xl:grid-cols-2">
-        <Panel className="p-6">
-          <div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-lg bg-mint text-forest"><UserRound size={19} /></span><div><h2 className="font-extrabold">Profile and organization</h2><p className="text-xs text-sage">Used in your internal workspace and invitations.</p></div></div>
+        <Panel className="p-7">
+          <div className="flex items-start justify-between gap-4"><div><h2 className="text-[19px] font-semibold">Profile and organization</h2><p className="mt-1.5 text-[13.5px] text-sage">Used in your workspace and client invitations.</p></div><span className="grid size-10 place-items-center bg-mint text-xs font-bold text-forest">{fullName.split(" ").map((part) => part[0]).join("").slice(0, 2).toUpperCase()}</span></div>
           <form className="mt-6 grid gap-5" onSubmit={(event) => { event.preventDefault(); void saveProfile.mutateAsync(); }}>
             <Field label="Your name"><Input value={fullName} onChange={(event) => setFullName(event.target.value)} /></Field>
             <Button type="submit" variant="secondary" disabled={saveProfile.isPending} className="justify-self-start">Save profile</Button>
@@ -58,10 +57,10 @@ export function SettingsPage() {
             <Button type="submit" variant="secondary" disabled={saveOrganization.isPending} className="justify-self-start">Save organization</Button>
           </form>
         </Panel>
-        <Panel className="p-6">
-          <div className="flex items-center justify-between gap-4"><div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-lg bg-mint text-forest"><CreditCard size={19} /></span><div><h2 className="font-extrabold">Billing</h2><p className="text-xs text-sage">Server-enforced plan limits.</p></div></div><Badge tone={billing.data?.plan === "pro" ? "success" : "neutral"}>{billing.data?.plan === "pro" ? "Pro" : "Free"}</Badge></div>
-          <div className="mt-7 bg-paper p-5"><p className="text-sm font-extrabold">{billing.data?.plan === "pro" ? "Your Pro workspace" : "Upgrade to Pro"}</p><p className="mt-2 text-sm leading-6 text-sage">Unlimited active projects, custom templates, scope version history, change requests, PDF exports, and more storage.</p></div>
-          <Button type="button" className="mt-6" disabled={billingAction.isPending} onClick={() => billingAction.mutate(billing.data?.plan === "pro" ? "portal" : "checkout")}>{billing.data?.plan === "pro" ? "Manage subscription" : "Upgrade to Pro"}</Button>
+        <Panel className="p-7">
+          <div className="flex items-start justify-between gap-4"><div><h2 className="text-[19px] font-semibold">Billing</h2><p className="mt-1.5 text-[13.5px] text-sage">Server-enforced plan limits.</p></div><Badge tone={billing.data?.plan === "pro" ? "success" : "neutral"}>{billing.data?.plan === "pro" ? "Pro plan" : "Free plan"}</Badge></div>
+          <div className="mt-[26px] border border-line"><div className="grid grid-cols-2 gap-px bg-line"><div className="bg-paper px-[18px] py-4"><span className="text-[12.5px] text-sage">Active projects</span><strong className="mt-1 block font-display text-xl">{billing.data?.plan === "pro" ? "Unlimited" : "1 / 1"}</strong></div><div className="bg-paper px-[18px] py-4"><span className="text-[12.5px] text-sage">File storage</span><strong className="mt-1 block font-display text-xl">{billing.data?.plan === "pro" ? "1 GB" : "25 MB"}</strong></div></div></div>
+          <div className="mt-5 bg-forest p-5 text-white"><h3 className="font-display text-base font-semibold">{billing.data?.plan === "pro" ? "Your Pro workspace" : "Upgrade to Pro — €19/mo"}</h3><p className="mt-2 text-[13.5px] leading-[1.6] text-white/70">Unlimited active projects, custom templates, version history, change requests, PDF exports, and 1 GB storage.</p><Button variant="accent" type="button" className="mt-4" disabled={billingAction.isPending} onClick={() => billingAction.mutate(billing.data?.plan === "pro" ? "portal" : "checkout")}>{billing.data?.plan === "pro" ? "Manage subscription" : "Upgrade to Pro"}</Button></div>
         </Panel>
       </div>
     </div>
