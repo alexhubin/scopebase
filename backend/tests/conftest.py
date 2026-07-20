@@ -1,8 +1,11 @@
 import os
+import tempfile
 from collections.abc import AsyncIterator
+from pathlib import Path
 
 os.environ["APP_ENV"] = "test"
-os.environ["DATABASE_URL"] = "sqlite+aiosqlite:////private/tmp/scopebase_pytest.db"
+database_path = Path(tempfile.gettempdir()) / "scopebase_pytest.db"
+os.environ["DATABASE_URL"] = f"sqlite+aiosqlite:///{database_path}"
 os.environ["SECRET_KEY"] = "scopebase-test-secret-key-with-at-least-32-characters"
 
 import httpx
