@@ -19,7 +19,7 @@ A separate crop was not needed because the affected outer frame, header, hero, f
 ## Required fidelity surfaces
 
 - Fonts and typography: Public Sans and Space Grotesk remain aligned with the source, with unchanged hierarchy and wrapping.
-- Spacing and layout rhythm: desktop uses 24 px top padding, 48 px side and bottom padding, and a centered 1440 px maximum-width frame; mobile remains full width.
+- Spacing and layout rhythm: desktop uses 24 px top padding, 48 px side and bottom padding, and a centered 1440 px maximum-width frame. Major content blocks now use 48 px desktop vertical padding and 36–40 px on smaller screens; mobile remains full width.
 - Colors and visual tokens: the outer canvas uses the source's muted gray-green treatment; product colors are unchanged.
 - Image quality and asset fidelity: the design contains no raster imagery requiring replacement.
 - Copy and content: unchanged from the approved redesign.
@@ -36,6 +36,9 @@ A separate crop was not needed because the affected outer frame, header, hero, f
 - User-directed polish: the 48 px desktop top inset felt too large.
 - Fix: reduced only the desktop top inset to 24 px while preserving the 48 px side and bottom spacing.
 - Post-fix evidence: the desktop browser measurement reports a 24 px frame offset; mobile remains at a 0 px offset with `scrollWidth: 390`.
+- User-directed polish: content blocks needed more breathing room above and below their contents.
+- Fix: increased vertical padding across the hero, statistics, problem rows, workflow, audience, pricing, FAQ, and final CTA while retaining existing horizontal alignment.
+- Post-fix evidence: desktop before-and-after captures show the expanded vertical rhythm across both the first viewport and workflow section; the mobile capture reports `scrollWidth: 390`.
 
 ## Functional validation
 
