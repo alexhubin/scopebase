@@ -48,7 +48,6 @@ class ObjectStorage:
         self,
         storage_key: str,
         content_type: str,
-        size: int,
     ) -> str:
         async with self.client(public=True) as client:
             return cast(
@@ -59,7 +58,6 @@ class ObjectStorage:
                         "Bucket": settings.s3_bucket,
                         "Key": storage_key,
                         "ContentType": content_type,
-                        "ContentLength": size,
                     },
                     ExpiresIn=900,
                 ),

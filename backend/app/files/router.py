@@ -72,11 +72,11 @@ async def make_presign(project: Project, payload: UploadRequest) -> UploadRespon
     storage_key = (
         f"organizations/{project.organization_id}/projects/{project.id}/{uuid.uuid4()}{suffix}"
     )
-    url = await storage.presigned_upload(storage_key, payload.content_type, payload.size)
+    url = await storage.presigned_upload(storage_key, payload.content_type)
     return UploadResponse(
         upload_url=url,
         storage_key=storage_key,
-        headers={"Content-Type": payload.content_type, "Content-Length": str(payload.size)},
+        headers={"Content-Type": payload.content_type},
     )
 
 
