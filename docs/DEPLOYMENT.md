@@ -36,6 +36,8 @@ Required production choices:
 - real SMTP settings;
 - either the isolated local billing adapter or complete Stripe credentials.
 
+The production Compose file includes Mailpit on a loopback-only port for portfolio and staging deployments without SMTP credentials. Replace `SMTP_HOST=mailpit` with a real authenticated provider before using ScopeBase for real client communication.
+
 Set `CADDY_NETWORK` to an external Docker network shared with a containerized Caddy instance. If Caddy runs directly on the host, create a dedicated unused external network for Compose and use the loopback ports for proxying.
 
 ## Start without touching public ports
