@@ -45,15 +45,15 @@ Set `CADDY_NETWORK` to an external Docker network shared with a containerized Ca
 Validate the rendered configuration and inspect port ownership before starting:
 
 ```bash
-docker compose -f docker-compose.production.yml config --quiet
+docker compose --env-file .env.production -f docker-compose.production.yml config --quiet
 ss -lntp | grep -E ':3080|:3090' || true
 ```
 
 Build and start:
 
 ```bash
-docker compose -f docker-compose.production.yml up -d --build
-docker compose -f docker-compose.production.yml ps
+docker compose --env-file .env.production -f docker-compose.production.yml up -d --build
+docker compose --env-file .env.production -f docker-compose.production.yml ps
 ```
 
 The backend applies Alembic migrations before starting workers. Demo data is not seeded automatically in production.
@@ -111,7 +111,7 @@ Then verify HTTPS, authentication, client links, an object upload, Mail delivery
 Inspect logs without printing the environment file:
 
 ```bash
-docker compose -f docker-compose.production.yml logs --tail=200 backend frontend gateway minio
+docker compose --env-file .env.production -f docker-compose.production.yml logs --tail=200 backend frontend gateway minio
 ```
 
 ## Seed the portfolio demo
@@ -119,7 +119,7 @@ docker compose -f docker-compose.production.yml logs --tail=200 backend frontend
 Run this only when the VPS is intentionally hosting the demo workspace:
 
 ```bash
-docker compose -f docker-compose.production.yml exec backend uv run python -m app.seed
+docker compose --env-file .env.production -f docker-compose.production.yml exec backend uv run python -m app.seed
 ```
 
 The seed is idempotent and creates the `Northstar Studio` workspace with `demo@scopebase.dev`.
@@ -141,7 +141,7 @@ Subscribe to customer subscription created, updated, and deleted events. Send a 
 Create consistent PostgreSQL dumps on a schedule and copy them off the VPS:
 
 ```bash
-docker compose -f docker-compose.production.yml exec -T postgres pg_dump -U scopebase -d scopebase -Fc > scopebase.dump
+docker compose --env-file .env.production -f docker-compose.production.yml exec -T postgres pg_dump -U scopebase -d scopebase -Fc > scopebase.dump
 ```
 
 Back up the MinIO volume or replicate its bucket to independent object storage. Database-only backups are incomplete because PostgreSQL stores file metadata, not file bytes.
@@ -154,9 +154,9 @@ Also retain the deployment commit SHA and encrypted production environment file 
 cd /opt/scopebase
 git fetch origin
 git pull --ff-only origin main
-docker compose -f docker-compose.production.yml build
-docker compose -f docker-compose.production.yml up -d
-docker compose -f docker-compose.production.yml ps
+docker compose --env-file .env.production -f docker-compose.production.yml build
+docker compose --env-file .env.production -f docker-compose.production.yml up -d
+docker compose --env-file .env.production -f docker-compose.production.yml ps
 ```
 
 The migration command runs before the API starts. Review new migrations and release notes before updating production.

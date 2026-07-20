@@ -208,7 +208,7 @@ ScopeBase is prepared for a single VPS without taking ownership of the host's ex
 
 ```bash
 cp .env.production.example .env.production
-docker compose -f docker-compose.production.yml up -d --build
+docker compose --env-file .env.production -f docker-compose.production.yml up -d --build
 ```
 
 Read [VPS deployment](docs/DEPLOYMENT.md) before the first deployment. It covers DNS, existing Caddy integration, migrations, Stripe webhooks, object storage, backups, rollback, and verification.
