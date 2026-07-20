@@ -12,6 +12,7 @@ const sections = [
   { label: "Overview", path: "/projects/$projectId" },
   { label: "Brief", path: "/projects/$projectId/brief" },
   { label: "Scope", path: "/projects/$projectId/scope" },
+  { label: "Change requests", path: "/projects/$projectId/changes" },
 ] as const;
 
 export function ProjectWorkspace() {
